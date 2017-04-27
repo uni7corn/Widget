@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.szzh.audio.newviewpager.indicator.IndicatorView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:gravity="center"
+        app:indicator_color="@android:color/holo_blue_light"
+        app:text_highlight_color="@android:color/holo_blue_light"
+        app:text_default_color="@android:color/darker_gray"
+        app:indicator_width="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+            android:textSize="20sp"
+            android:textColor="@android:color/holo_blue_light"
+            android:text="登录"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:id="@+id/textView4"/>
+
+    <TextView
+            android:textSize="20sp"
+            android:textColor="@android:color/darker_gray"
+            android:text="注册"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:id="@+id/tv_login"/>
+
+</com.szzh.audio.newviewpager.indicator.IndicatorView>

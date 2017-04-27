@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <LinearLayout
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_notifications_black_24dp"
+                android:id="@+id/imageView2"
+                android:contentDescription="@null"/>
+
+        <EditText
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColorHint="@android:color/darker_gray"
+                android:hint="请输入手机号码"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="20"
+                android:id="@+id/editText"
+                tools:ignore="RtlHardcoded"/>
+
+    </LinearLayout>
+
+    <View
+            android:layout_marginTop="12dp"
+            android:background="@android:color/darker_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    <LinearLayout
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_notifications_black_24dp"
+                android:id="@+id/imageView3"
+                android:contentDescription="@null"/>
+
+        <EditText
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColorHint="@android:color/darker_gray"
+                android:hint="请输入密码 区分大小写"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="20"
+                android:id="@+id/editText2"
+                tools:ignore="RtlHardcoded"/>
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_notifications_black_24dp"
+                android:id="@+id/imageView4"
+                android:contentDescription="@null"/>
+
+    </LinearLayout>
+
+    <View
+            android:layout_marginTop="12dp"
+            android:background="@android:color/darker_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    <Button
+            android:layout_marginTop="40dp"
+            android:text="登录"
+            android:textSize="18sp"
+            android:background="@android:color/holo_blue_light"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"/>
+
+    <TextView
+            android:layout_marginTop="56dp"
+            android:gravity="center"
+            android:text="忘记密码"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"/>
+
+</LinearLayout>

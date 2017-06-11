@@ -28,7 +28,6 @@ public class VoiceProgress extends View implements Runnable {
 
 
 
-
     private int width;
     private int height;
 

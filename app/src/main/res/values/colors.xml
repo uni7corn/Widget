@@ -4,4 +4,18 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="pathColor">#FF4891EB</color>
+
+
+    <color name="default_font_color">#ff666666</color>
+    <color name="weekend_font_color">#ff999999</color>
+    <color name="schedule_font_color">#ffff9412</color>
+    <color name="order_font_color">#ff56ddf5</color>
+    <color name="today_font_color">#ff6886d4</color>
+
+    <color name="default_past_bg_color">#FFE7E7E7</color>
+    <color name="default_schedule_bg_color">#FFF2ECD4</color>
+    <color name="default_order_bg_color">#FFDCF0F3</color>
+    <color name="default_today_bg_color">#ff6886d4</color>
+
+    <color name="white">#ffffffff</color>
 </resources>

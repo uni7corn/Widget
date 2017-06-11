@@ -265,7 +265,7 @@ public class LoadingProgress extends View {
                     mGrowAnimator.start();
                     mProgressPaint.setColor(getResources().getColor(R.color.pathColor));
                 } else {
-                    postInvalidateDelayed(10);
+                    postInvalidateDelayed(16);
                 }
             }
         });
@@ -302,7 +302,7 @@ public class LoadingProgress extends View {
                     }
                     if (mProgress > 0.1f && mGrowAnimator.isRunning())
                         mPointPaint.setColor(getResources().getColor(android.R.color.transparent));
-                    postInvalidateDelayed(10);
+                    postInvalidateDelayed(16);
                 }
             }
         });
@@ -322,7 +322,7 @@ public class LoadingProgress extends View {
                 if (value > 0.5f && !mReduceAnimator.isStarted()) {
                     mReduceAnimator.start();
                 } else {
-                    postInvalidateDelayed(20);
+                    postInvalidateDelayed(16);
                 }
             }
         });
@@ -348,7 +348,7 @@ public class LoadingProgress extends View {
                 if (mProgress == 0) {
                     mAction = false;
                 }
-                postInvalidateDelayed(20);
+                postInvalidateDelayed(16);
             }
         });
     }
@@ -366,7 +366,7 @@ public class LoadingProgress extends View {
                 float v = (float) animation.getAnimatedValue();
                 mOffset = v * mRadius;
                 mEndDegress = v * 40;
-                postInvalidateDelayed(10);
+                postInvalidateDelayed(16);
                 if (v == 1.0f) {
                     long duration = mEndAnimator.getDuration();
                     if (duration == 600 && !mCanCel) {

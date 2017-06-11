@@ -8,17 +8,17 @@
     android:orientation="vertical"
     tools:context="com.szzh.audio.newviewpager.indicator.MainActivity">
 
-
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Button"/>
 
-    <com.szzh.audio.newviewpager.calender.CalendarView
+    <com.szzh.audio.newviewpager.progress.LoadingProgress
         android:id="@+id/calender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
         android:background="@android:color/white"/>
 
 </LinearLayout>

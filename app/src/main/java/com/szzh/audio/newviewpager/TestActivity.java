@@ -3,10 +3,9 @@ package com.szzh.audio.newviewpager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
-import com.szzh.audio.newviewpager.progress.VoiceProgress;
+import com.szzh.audio.newviewpager.calender.CalendarView;
 
 /**
  * Created by jzz
@@ -24,35 +23,13 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final VoiceProgress progressBar = (VoiceProgress) findViewById(R.id.viewPager);
+        final CalendarView calendarView = (CalendarView) findViewById(R.id.calender);
 
-        progressBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e(TAG, "onClick: ----->");
-                if (v.getTag() == null) {
-                    progressBar.play();
-                    v.setTag(true);
-                } else {
-                    progressBar.stop();
-                    v.setTag(null);
-                }
-            }
-        });
 
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (v.getTag() == null) {
-                    progressBar.play();
-                    v.setTag(true);
-                } else {
-                    progressBar.stop();
-                    v.setTag(null);
-                }
-
-
+                calendarView.updateSchedule(null);
             }
         });
     }

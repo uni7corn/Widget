@@ -8,9 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -26,7 +24,7 @@ import java.util.List;
 /**
  * Created by jzz
  * on 2017/4/11.
- *
+ * <p>
  * desc:
  */
 
@@ -69,12 +67,6 @@ public class ScheduleView extends View {
 
     public ScheduleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public ScheduleView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
@@ -131,6 +123,7 @@ public class ScheduleView extends View {
             mSchedules.add(schedules);
         }
 
+        addTimeStamp(0);
 
         // Log.e(TAG, "init: ----->size=" + mSchedules.size() + "   \r\n" + mSchedules.toString());
 
@@ -220,6 +213,7 @@ public class ScheduleView extends View {
 
         Paint textPaint = this.mTextPaint;
 
+        textPaint.setColor(Color.BLACK);
         //绘制最左边第一列文字
         for (int i = 0; i < 4; i++) {
             canvas.drawText(mText[i], (itemWidth >> 1), ((itemHeight >> 1) + (mBound.height() >> 1)) + itemHeight * i, textPaint);

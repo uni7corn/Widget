@@ -14,11 +14,11 @@
         android:layout_height="wrap_content"
         android:text="Button"/>
 
-    <com.szzh.audio.newviewpager.progress.LoadingProgress
+    <com.szzh.audio.newviewpager.schedule.ScheduleView
         android:id="@+id/calender"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_gravity="center"
-        android:background="@android:color/white"/>
+        android:layout_margin="16dp"/>
 
 </LinearLayout>

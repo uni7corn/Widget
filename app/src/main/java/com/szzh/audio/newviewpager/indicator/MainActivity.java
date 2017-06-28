@@ -3,8 +3,11 @@ package com.szzh.audio.newviewpager.indicator;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 import com.szzh.audio.newviewpager.R;
+import com.szzh.audio.newviewpager.annotation.AnnitationProcess;
 
 public class MainActivity extends AppCompatActivity implements AccountContract.View, IndicatorView.OnViewPagerChangeListener {
 
@@ -19,7 +22,20 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        AccountPresenter.init(this);
+
+        AnnitationProcess<AccountPresenter> annitationProcess = new AnnitationProcess<>();
+        annitationProcess.process(AccountPresenter.class);
+
+
+        findViewById(R.id.button2).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAccountPresenter.login("123", "123");
+            }
+        });
+
+        // mViewPager = (ViewPager) findViewById(R.id.viewPager);
 //        mViewPager.setAdapter(new PagerAdapter() {
 //
 //
@@ -65,10 +81,10 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
 //        });
         //mIndicatorView = (IndicatorView) findViewById(R.id.indicator);
         //mIndicatorView.addViewPager(mViewPager);
-       // mIndicatorView.setOnViewPagerChangeListener(this);
+        // mIndicatorView.setOnViewPagerChangeListener(this);
 
 
-       // mAccountPresenter = AccountPresenter.init(this);
+        // mAccountPresenter = AccountPresenter.init(this);
 
     }
 

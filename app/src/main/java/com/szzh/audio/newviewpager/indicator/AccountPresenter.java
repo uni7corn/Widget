@@ -3,10 +3,12 @@ package com.szzh.audio.newviewpager.indicator;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.szzh.audio.newviewpager.annotation.NetAnnotation;
+
 /**
  * Created by jzz
  * on 2017/4/4.
- *
+ * <p>
  * desc:
  */
 
@@ -30,6 +32,7 @@ public class AccountPresenter implements AccountContract.Presenter {
 
     }
 
+    @NetAnnotation
     @Override
     public void login(String tel, String pwd) {
 

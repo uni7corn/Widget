@@ -3,4 +3,14 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="text">aaaddd大大所大所大所ddddddddddddddddddddddddd
+        dddddddddddddddddddddd大大大大大所大所ddddddddddddddddddddddddddd
+        111111111111111111大大啥大所多11111
+        大大所大大所
+        dasdadadsaasdasdadadada奥术大师大所大所大所大大所dadasdadasdsadasdasd
+        111111111111111111111111大大所大所大所大多11111111大叔大婶大所1111dddd</string>
+
+
+    <string name="unfold_load_more_hint">展开查看更多</string>
+    <string name="fold_load_less_hint">收缩显示更少</string>
 </resources>

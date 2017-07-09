@@ -1,61 +1,51 @@
 package com.szzh.audio.newviewpager.schedule;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import com.szzh.audio.newviewpager.R;
+
 import java.util.List;
 
 /**
  * Created by jzz
  * on 2017/4/11.
  * <p>
- * desc:
+ * desc:  日历排班 view
  */
 
+@SuppressWarnings("deprecation")
 public class ScheduleView extends View {
 
     private static final String TAG = "ScheduleView";
 
-    private List<Schedules> mSchedules;
+    private List<Schedule> mSchedules;
 
     private Paint mTextPaint;
-    private Paint mCellPaint;
     private Paint mCellBgPaint;
-
-    private int mWidth;
-    private int mHeight;
+    private Paint mBorderPaint;
 
     private int mItemWidth;
+
     private int mItemHeight;
+    private String[] mText = {"排班", "上午", "下午"};
+    private String[] mBookType = {"立即预约", "全部约满", "全部排班"};
 
-
-    private String[] mText = {"排班", "上午", "中午", "晚上"};
-    private String[] mWeek = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
-    private String[] mBookType = {"    ", "立即预约", "全部排班", "全部约满"};
-    private List<String> mDate = new ArrayList<>();
     private Rect mBound;
-
     private onScheduleListener mOnScheduleListener;
-    private int mWeekCount = 8;
-    private int mTimeCount = 4;
-    private boolean mShowDate = true;
-    private long mTimeStamp;
+    private Path mRoundPath;
+    private RectF mRectF;
 
     public ScheduleView(Context context) {
         this(context, null);
@@ -70,14 +60,12 @@ public class ScheduleView extends View {
         init();
     }
 
-    @SuppressWarnings("deprecation")
     private void init() {
         //初始化text paint
         TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        textPaint.setColor(getResources().getColor(android.R.color.black));
+        textPaint.setColor(parseColor(R.color.schedule_date_font));
         textPaint.setStyle(Paint.Style.FILL);
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14, getResources().getDisplayMetrics());
-        textPaint.setTextSize(px);
+        textPaint.setTextSize(parseTextSize(12));
         textPaint.setTextAlign(Paint.Align.CENTER);
         //获得绘制文本的宽和高
         mBound = new Rect();
@@ -85,55 +73,46 @@ public class ScheduleView extends View {
 
         this.mTextPaint = textPaint;
 
-        //初始化cell paint
-        Paint cellPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        cellPaint.setColor(getResources().getColor(android.R.color.darker_gray));
-        cellPaint.setStyle(Paint.Style.STROKE);
-        cellPaint.setStrokeWidth(1.0f);
-
-        this.mCellPaint = cellPaint;
-
         //初始化cell bg paint
         Paint cellBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        cellBgPaint.setColor(getResources().getColor(android.R.color.holo_blue_light));
+        cellBgPaint.setColor(parseColor(R.color.schedule_translate));
         cellBgPaint.setStyle(Paint.Style.FILL);
 
         this.mCellBgPaint = cellBgPaint;
 
+        //初始化 border paint
+        Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+        borderPaint.setColor(parseColor(R.color.schedule_translate));
+        borderPaint.setStyle(Paint.Style.FILL);
 
-        this.mSchedules = new ArrayList<>();
-
-        for (int j = 0; j < 7; j++) {
-
-            Schedules schedules = new Schedules();
-            schedules.setDate("02/1" + j);
-            schedules.setDays("0177");
-
-            List<Schedules.Schedule> schedule = new ArrayList<>();
-            for (int i = 0; i < 3; i++) {
-                Schedules.Schedule ss = new Schedules.Schedule();
-                ss.setBookType((int) (Math.random() * 4));
-                ss.setTimeType((int) (Math.random() * 3));
-                schedule.add(ss);
-            }
-
-            schedules.setWeekType(mWeek[j]);
-            schedules.setSchedules(schedule);
-
-            mSchedules.add(schedules);
-        }
-
-        addTimeStamp(0);
-
-        // Log.e(TAG, "init: ----->size=" + mSchedules.size() + "   \r\n" + mSchedules.toString());
-
+        this.mBorderPaint = borderPaint;
 
     }
 
-
-    public void addOnScheduleListener(onScheduleListener onScheduleListener) {
+    public ScheduleView addOnScheduleListener(onScheduleListener onScheduleListener) {
         mOnScheduleListener = onScheduleListener;
+        return this;
     }
+
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//       setMeasuredDimension( measureWidth(widthMeasureSpec),measureHeight(heightMeasureSpec));
+//    }
+//
+//    private int measureHeight(int heightMeasureSpec) {
+//        return 0;
+//    }
+//
+//    private int measureWidth(int widthMeasureSpec) {
+//        int defaultWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 200, getResources().getDisplayMetrics());
+//        switch (View.MeasureSpec.getMode(widthMeasureSpec)) {
+//            case MeasureSpec.EXACTLY:
+//                return Math.max(defaultWidth, View.MeasureSpec.getSize(widthMeasureSpec));
+//            default:
+//                return defaultWidth;
+//        }
+//    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -148,21 +127,27 @@ public class ScheduleView extends View {
         int contentHeight = h - paddingTop - paddingBottom;
 
         mItemWidth = contentWidth >> 3;
-        mItemHeight = contentHeight >> 2;
+        mItemHeight = contentHeight / 3;
 
+        RectF rectF = new RectF(0, 0, contentWidth, contentHeight);
+        this.mRectF = rectF;
+
+        Path path = new Path();
+        path.addRoundRect(rectF, 20, 20, Path.Direction.CCW);
+        this.mRoundPath = path;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mSchedules == null)
-            return;
         super.onDraw(canvas);
+        List<Schedule> schedules = this.mSchedules;
+        if (schedules == null || schedules.isEmpty())
+            return;
 
         int itemWidth = this.mItemWidth;
         int itemHeight = this.mItemHeight;
 
-        /*
+        /* 1.第一种实现裁剪,使 view 变圆角的方法
         int restCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null,
                 Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG
                         | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG
@@ -170,145 +155,170 @@ public class ScheduleView extends View {
                         | Canvas.CLIP_TO_LAYER_SAVE_FLAG);
                         */
 
-        int restCount = canvas.save();
-
-
-        RectF rectF = new RectF(0, 0, 8 * itemWidth, 4 * itemHeight);
         /*
         mCellBgPaint.setXfermode(null);
         mCellBgPaint.setStyle(Paint.Style.FILL);
         mCellBgPaint.setColor(Color.WHITE);
         canvas.drawRoundRect(rectF, 20, 20, mCellBgPaint);
-
         mCellBgPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         */
 
 
-        Path path = new Path();
-        path.addRoundRect(rectF, 20, 20, Path.Direction.CCW);
+        //2.第二种实现裁剪使 view 变圆角的方法(使用了交集的方式)
+        int restCount = canvas.save();
+
+        Path path = this.mRoundPath;
         canvas.clipPath(path);
 
-        mCellBgPaint.setColor(Color.parseColor("#22A9A9A9"));
-        mCellBgPaint.setStrokeWidth(1.0f);
-        mCellBgPaint.setStyle(Paint.Style.STROKE);
-        //1.画最上面横排星期title
-        canvas.drawRect(0, 0, mWeekCount * itemWidth, itemHeight, mCellBgPaint);
+        Paint cellBgPaint = this.mCellBgPaint;
 
-        //2.画左边竖排排班早，中，晚时刻
-        canvas.drawRect(0, itemHeight, itemWidth, mTimeCount * itemHeight, mCellBgPaint);
+        cellBgPaint.setColor(parseColor(R.color.schedule_no_cell_bg));
+        //1.画最上面横排星期背景
+        canvas.drawRect(0, 0, 8 * itemWidth, itemHeight, cellBgPaint);
+
+        //2.画左边竖排 排班,早，中时刻
+        cellBgPaint.setColor(parseColor(R.color.white));
+        canvas.drawRect(0, itemHeight, itemWidth, 3 * itemHeight, cellBgPaint);
 
         //开始画9宫格
-
+        Paint borderPaint = this.mBorderPaint;
         //画3条横线,成4行
-        mCellBgPaint.setColor(Color.GRAY);
-        for (int i = 1; i < mTimeCount; i++) {
-            canvas.drawLine(0, itemHeight * i, 8 * itemWidth, itemHeight * i, mCellBgPaint);
+        borderPaint.setStyle(Paint.Style.FILL);
+        borderPaint.setColor(parseColor(R.color.schedule_border));
+        for (int i = 1; i < 3; i++) {
+            canvas.drawLine(0, itemHeight * i, 8 * itemWidth, itemHeight * i, borderPaint);
         }
 
         //画7条竖线，成8列
-        for (int i = 1; i < mWeekCount; i++) {
-            canvas.drawLine(itemWidth * i, 0, itemWidth * i, 4 * itemHeight, mCellBgPaint);
+        for (int i = 1; i < 8; i++) {
+            canvas.drawLine(itemWidth * i, 0, itemWidth * i, 4 * itemHeight, borderPaint);
         }
-
 
         Paint textPaint = this.mTextPaint;
 
-        textPaint.setColor(Color.BLACK);
+        Rect bound = this.mBound;
+
+        String[] leftText = this.mText;
+
+        String[] bookType = this.mBookType;
+
         //绘制最左边第一列文字
-        for (int i = 0; i < 4; i++) {
-            canvas.drawText(mText[i], (itemWidth >> 1), ((itemHeight >> 1) + (mBound.height() >> 1)) + itemHeight * i, textPaint);
+        for (int i = 0; i < 3; i++) {
+            textPaint.setColor(parseColor(R.color.schedule_am_font));
+            canvas.drawText(leftText[i], (itemWidth >> 1), ((itemHeight >> 1) + (bound.height() >> 1)) + itemHeight * i, textPaint);
         }
 
         //绘制第二列文字
-        String text = mWeek[0];
+        String text = schedules.get(0).getWeek();
 
-        Rect bound = new Rect();
         textPaint.getTextBounds(text, 0, text.length(), bound);
 
-        textPaint.setColor(Color.WHITE);
-        textPaint.setStyle(Paint.Style.FILL);
-        textPaint.setTextAlign(Paint.Align.CENTER);
+        textPaint.setColor(parseColor(R.color.white));
 
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics());
-        textPaint.setTextSize(px);
+        float px = parseTextSize(12);
 
-        mCellBgPaint.setStyle(Paint.Style.FILL);
+        float tpx = parseTextSize(10);
 
-        for (int i = 0, len = mWeek.length; i < len; i++) {
+        float pp = parseTextSize(12);
+
+
+        for (int i = 0, len = schedules.size(); i < len; i++) {
+            Schedule schedule = schedules.get(i);
+            //向下绘制控制
+
+            //1.绘制星期
             textPaint.setTextSize(px);
-            textPaint.setColor(Color.BLACK);
-            //星期
-            text = mWeek[i];
-            canvas.drawText(text, (i + 1) * itemWidth + (itemWidth >> 1), itemHeight / 5 * 3 - bound.bottom - 10, textPaint);
-            //日期
-            if (mShowDate) {
-                text = mDate.get(i);
-                float tpx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
-                textPaint.setTextSize(tpx);
-                canvas.drawText(text, (i + 1) * itemWidth + (itemWidth >> 1), itemHeight / 5 * 4 - bound.bottom + 8, textPaint);
-                textPaint.setTextSize(px);
-            }
-        }
+            textPaint.getTextBounds(text, 0, text.length(), bound);
+            textPaint.setColor(parseColor(R.color.schedule_date_font));
+            text = schedule.getWeek();
+            canvas.drawText(text, (i + 1) * itemWidth + (itemWidth >> 1), itemHeight / 5 * 3 - bound.bottom, textPaint);
 
-        for (int j = 1; j <= mSchedules.size(); j++) {
+            //2.日期
+            String date = schedule.getDate().trim();
+            text = date.substring(date.indexOf("/") + 1);
+            textPaint.setTextSize(tpx);
+            canvas.drawText(text, (i + 1) * itemWidth + (itemWidth >> 1), itemHeight / 5 * 4 - bound.bottom, textPaint);
+            textPaint.setTextSize(px);
 
-            List<Schedules.Schedule> schedules1 = mSchedules.get(j - 1).getSchedules();
+            //3.绘制显示的预约信息
+            textPaint.setColor(parseColor(R.color.white));
+            textPaint.setTextSize(pp);
 
-            for (int i = 0, len = schedules1.size(); i < len; i++) {
-
-                canvas.save();
-
-                //绘制显示的预约信息
-                textPaint.setColor(Color.WHITE);
-                float pp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
-                textPaint.setTextSize(pp);
-                int bookType = schedules1.get(i).getBookType();
-                text = mBookType[bookType];
-                if (bookType == 0) {
-                    mCellBgPaint.setColor(getResources().getColor(android.R.color.white));
-                } else if (bookType == 1) {
-                    mCellBgPaint.setColor(getResources().getColor(android.R.color.holo_blue_light));
-                } else if (bookType == 2) {
-                    mCellBgPaint.setColor(getResources().getColor(android.R.color.holo_green_light));
-                } else {
-                    mCellBgPaint.setColor(getResources().getColor(android.R.color.holo_orange_light));
+            //绘制文字
+            int isAm = schedule.getIsAm();
+            if (isAm != -1) {
+                if (isAm == 0 || isAm == 2) {
+                    switch (schedule.getAmBookType()) {//上午
+                        case 1://立即预约
+                            text = bookType[0];
+                            cellBgPaint.setColor(parseColor(R.color.schedule_booked_cell_bg));
+                            break;
+                        case 2://全部约满
+                            text = bookType[1];
+                            cellBgPaint.setColor(parseColor(R.color.schedule_no_cell_bg));
+                            break;
+                        case 3://全部排班
+                            text = bookType[2];
+                            cellBgPaint.setColor(parseColor(R.color.schedule_all_cell_bg));
+                            break;
+                    }
+                    //1.绘制item背景矩形
+                    canvas.drawRect((i + 1) * itemWidth + 1, itemHeight + 1, (i + 2) * itemWidth - 1, itemHeight * 2 - 1, cellBgPaint);
+                    //2.绘制第一行文字
+                    canvas.drawText(text, 0, 2, (i + 1) * itemWidth + (itemWidth >> 1), itemHeight + (itemHeight >> 1) - bound.bottom, textPaint);
+                    //3.绘制第二行文字
+                    canvas.drawText(text, 2, text.length(), (i + 1) * itemWidth + (itemWidth >> 1), itemHeight + (itemHeight >> 2) * 3 - bound.bottom, textPaint);
                 }
 
-                //1.绘制item背景矩形
-                canvas.drawRect(j * itemWidth + 1, itemHeight * (i + 1) + 1, (j + 1) * itemWidth - 1, itemHeight * (i + 2) - 1, mCellBgPaint);
-
-                //2.绘制第一行文字
-                canvas.drawText(text, 0, 2, j * itemWidth + (itemWidth >> 1), itemHeight * (i + 1) + (itemHeight >> 1) - bound.bottom - 4, textPaint);
-                //3.绘制第二行文字
-                canvas.drawText(text, 2, text.length(), j * itemWidth + (itemWidth >> 1), itemHeight * (i + 1) + (itemHeight >> 2) * 3 - bound.bottom + 6, textPaint);
-
-                //进行平移变幻
-                canvas.translate(j * itemWidth, itemHeight * (i + 1));
-
-                canvas.restore();
+                if (isAm == 1 || isAm == 2) {
+                    switch (schedule.getPmBookType()) {//下午
+                        case 1://立即预约
+                            text = bookType[0];
+                            cellBgPaint.setColor(parseColor(R.color.schedule_booked_cell_bg));
+                            //1.绘制item背景矩形
+                            break;
+                        case 2://全部约满
+                            text = bookType[1];
+                            cellBgPaint.setColor(parseColor(R.color.schedule_no_cell_bg));
+                            break;
+                        case 3://全部排班
+                            text = bookType[2];
+                            cellBgPaint.setColor(parseColor(R.color.schedule_all_cell_bg));
+                            break;
+                        default:
+                            break;
+                    }
+                    //1.绘制item背景矩形
+                    canvas.drawRect((i + 1) * itemWidth + 1, 2 * itemHeight + 1, (i + 2) * itemWidth - 1, itemHeight * 3 - 1, cellBgPaint);
+                    //2.绘制第一行文字
+                    canvas.drawText(text, 0, 2, (i + 1) * itemWidth + (itemWidth >> 1), 2 * itemHeight + (itemHeight >> 1) - bound.bottom, textPaint);
+                    //3.绘制第二行文字
+                    canvas.drawText(text, 2, text.length(), (i + 1) * itemWidth + (itemWidth >> 1), 2 * itemHeight + (itemHeight >> 2) * 3 - bound.bottom, textPaint);
+                }
             }
-
         }
 
         //mCellBgPaint.setXfermode(null);
 
-
-        mCellBgPaint.setStyle(Paint.Style.STROKE);
-        mCellBgPaint.setDither(true);
-        mCellBgPaint.setAntiAlias(true);
-        mCellBgPaint.setStrokeWidth(2.0f);
-        mCellBgPaint.setColor(Color.GRAY);
-        canvas.drawRoundRect(rectF, 20, 20, mCellBgPaint);
-
+        borderPaint.setStyle(Paint.Style.STROKE);
+        borderPaint.setStrokeWidth(2.0f);
+        borderPaint.setColor(parseColor(R.color.schedule_border));
+        RectF rectF = this.mRectF;
+        canvas.drawRoundRect(rectF, 20, 20, borderPaint);
 
         canvas.restoreToCount(restCount);
-
     }
 
+    private int parseColor(@ColorRes int color) {
+        return getResources().getColor(color);
+    }
+
+    private float parseTextSize(int size) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, size, getResources().getDisplayMetrics());
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //case MotionEvent.ACTION_UP:
@@ -338,121 +348,36 @@ public class ScheduleView extends View {
             onScheduleListener onScheduleListener = this.mOnScheduleListener;
             if (onScheduleListener == null) return;
 
-            List<Schedules> schedules = this.mSchedules;
-            Schedules schedules1 = schedules.get(remainderX - 1);
+            List<Schedule> schedules = this.mSchedules;
+            Schedule schedule = schedules.get(remainderX - 1);
+            if (schedule.getIsAm() == -1) return;
 
-            List<Schedules.Schedule> schedules2 = schedules1.getSchedules();
-
-            int bookType = schedules2.get(remainderY).getBookType();
-
-            // Log.e(TAG, "isContainer: ----->" + remainderX + "  " + remainderY + " bookType=" + bookType);
-
-            switch (bookType) {
-                case 0:
-                    onScheduleListener.noSchedule();
-                    break;
+            switch (remainderY) {
                 case 1:
-                    onScheduleListener.showSchedule(schedules1.getDate() + schedules1.getWeekType() + mText[remainderY] + "可预约");
+                    int amBookType = schedule.getAmBookType();
+                    if (amBookType == 0) return;
+                    onScheduleListener.showSchedule(remainderX - 1, 0, amBookType, schedule);
                     break;
                 case 2:
-                    onScheduleListener.showSchedule(schedules1.getDate() + schedules1.getWeekType() + mText[remainderY] + "全部排班");
-                    break;
-                case 3:
-                    onScheduleListener.showSchedule(schedules1.getDate() + schedules1.getWeekType() + mText[remainderY] + "已预约满了。。。不可预约");
+                    int pmBookType = schedule.getPmBookType();
+                    if (pmBookType == 0) return;
+                    onScheduleListener.showSchedule(remainderX - 1, 1, schedule.getPmBookType(), schedule);
                     break;
                 default:
                     break;
             }
-
-
-        } //else {
-        //在不可用点击区域
-
-        // }
-
-    }
-
-    @SuppressLint("DefaultLocale")
-    public void addTimeStamp(long timeStamp) {
-        this.mTimeStamp = timeStamp;
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(1494484200 * 1000L);//1494484200   1492387200
-
-        int week = calendar.get(Calendar.DAY_OF_WEEK);
-        Log.e(TAG, "addTimeStamp: ----->" + week);
-        switch (week) {
-            case 1://周日
-                calendar.roll(Calendar.DATE, -6);
-                break;
-            case 2://周一
-
-                break;
-            case 3://周二
-                calendar.roll(Calendar.DATE, -1);
-
-                break;
-            case 4://周三
-
-                calendar.roll(Calendar.DATE, -2);
-
-                break;
-            case 5://周四
-                calendar.roll(Calendar.DATE, -3);
-
-                break;
-            case 6://周五
-                calendar.roll(Calendar.DATE, -4);
-
-                break;
-            case 7://周六
-                calendar.roll(Calendar.DATE, -5);
-
-                break;
-        }
-
-        Date firstTime = calendar.getTime();
-
-        calendar.setTime(firstTime);
-
-        for (int i = 0; i < 7; i++) {
-
-            if (i != 0) {
-                calendar.roll(Calendar.DATE, 1);
-            }
-            int month = calendar.get(Calendar.MONTH) + 1;
-            int date = calendar.get(Calendar.DATE);
-
-            mDate.add(String.format("%02d%s%02d", month, "/", date));
-
-            Log.e(TAG, "addTimeStamp: ------ i=" + i + "  nextTime=" + "  month=" + month + "  date=" + date);
         }
 
     }
 
-    public void init(List<Schedules> schedules) {
+    public ScheduleView addAdapter(List<Schedule> schedules) {
         this.mSchedules = schedules;
         invalidate();
-    }
-
-    public void addWeek(int weekCount) {
-        this.mWeekCount = weekCount;
-        invalidate();
-    }
-
-    public void showDate(boolean showDate) {
-        this.mShowDate = showDate;
-        invalidate();
-    }
-
-    public void addTimeTitle(int timeCount) {
-        this.mTimeCount = timeCount;
-        invalidate();
+        return this;
     }
 
     public interface onScheduleListener {
 
-        void showSchedule(String date);
-
-        void noSchedule();
+        void showSchedule(int position, int am, int bookType, Schedule schedule);
     }
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -20,7 +19,7 @@ public class FoldTextView extends AppCompatTextView implements View.OnClickListe
 
     public static final String TAG = "FoldTextView";
 
-    private int mDefaultShowLine = 3;//默认设置显示的 text 行数
+    private int mDefaultShowLine = 2;//默认设置显示的 text 行数
     private ViewGroup.LayoutParams mLayoutParams;
 
     private int mMaxHeight;//最大显示的整个控件的高度
@@ -43,7 +42,6 @@ public class FoldTextView extends AppCompatTextView implements View.OnClickListe
     }
 
     private void init(Context context, AttributeSet attrs) {
-        setOnClickListener(this);
     }
 
     public void setOnFoldListener(OnFoldListener onFoldListener) {
@@ -63,7 +61,6 @@ public class FoldTextView extends AppCompatTextView implements View.OnClickListe
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Log.e(TAG, "onAttachedToWindow: --------------->" + getLineCount());
         //初始化
         if (mLayoutParams == null) {
             mLayoutParams = getLayoutParams();
@@ -81,6 +78,7 @@ public class FoldTextView extends AppCompatTextView implements View.OnClickListe
     @Override
     public void setText(CharSequence text, BufferType type) {
         super.setText(text, type);
+
         //赋值计算
         int linCount = getLineCount();
 
@@ -92,7 +90,6 @@ public class FoldTextView extends AppCompatTextView implements View.OnClickListe
         int lineHeight = getLineHeight();
 
         int contentHeight = lineHeight * linCount;
-        Log.e(TAG, "onSizeChanged: ------->lineCount = " + linCount + "contentHeight = " + contentHeight + "   lineHeight=" + lineHeight);
 
         //当文字行数大于默认设置的显示行数时,实现折叠,首先初始化折叠
         //1.计算默认显示的文字行数的高度
@@ -104,24 +101,27 @@ public class FoldTextView extends AppCompatTextView implements View.OnClickListe
 
         mLayoutParams.height = (int) defaultHeight + getPaddingBottom() + getPaddingTop();
         setLayoutParams(mLayoutParams);
+
+        if (linCount > 2) {
+            setOnClickListener(this);
+        }
     }
 
     @Override
     public void onClick(final View v) {
 
         OnFoldListener onFoldListener = this.mOnFoldListener;
+        if (onFoldListener == null) return;
 
         float foldHeight = this.mFoldHeight;
         float defaultSHowHeight = mDefaultSHowHeight;
         if (v.getTag() == null) {//展开动画
             animator(foldHeight, defaultSHowHeight);
             v.setTag(true);
-            if (onFoldListener == null) return;
             onFoldListener.unfold();
         } else {//折叠动画
             animator(-foldHeight, mMaxHeight);
             v.setTag(null);
-            if (onFoldListener == null) return;
             onFoldListener.fold();
         }
     }

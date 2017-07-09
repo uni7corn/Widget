@@ -32,4 +32,14 @@
     <color name="divider_color">#eeeeee</color>
 
 
+    <!--schedule view-->
+    <color name="schedule_border">#dedede</color>
+    <color name="schedule_date_font">#333333</color>
+    <color name="schedule_all_cell_bg">#5d93ec</color>
+    <color name="schedule_booked_cell_bg">#59a9f8</color>
+    <color name="schedule_no_cell_bg">#f6f6f6</color>
+    <color name="schedule_am_font">#999999</color>
+    <color name="schedule_translate">@android:color/transparent</color>
+
+
 </resources>

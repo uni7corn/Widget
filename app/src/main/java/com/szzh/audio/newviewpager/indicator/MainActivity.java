@@ -3,39 +3,23 @@ package com.szzh.audio.newviewpager.indicator;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.View.OnClickListener;
 
 import com.szzh.audio.newviewpager.R;
-import com.szzh.audio.newviewpager.annotation.AnnitationProcess;
 
-public class MainActivity extends AppCompatActivity implements AccountContract.View, IndicatorView.OnViewPagerChangeListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
     private ViewPager mViewPager;
     private IndicatorView mIndicatorView;
-    private AccountPresenter mAccountPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AccountPresenter.init(this);
 
-        AnnitationProcess<AccountPresenter> annitationProcess = new AnnitationProcess<>();
-        annitationProcess.process(AccountPresenter.class);
-
-
-        findViewById(R.id.button2).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAccountPresenter.login("123", "123");
-            }
-        });
-
-        // mViewPager = (ViewPager) findViewById(R.id.viewPager);
+//        mViewPager = (ViewPager) findViewById(R.id.viewPager);
 //        mViewPager.setAdapter(new PagerAdapter() {
 //
 //
@@ -79,68 +63,11 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
 //                return object instanceof View && object == view;
 //            }
 //        });
-        //mIndicatorView = (IndicatorView) findViewById(R.id.indicator);
-        //mIndicatorView.addViewPager(mViewPager);
-        // mIndicatorView.setOnViewPagerChangeListener(this);
-
-
-        // mAccountPresenter = AccountPresenter.init(this);
-
+//        mIndicatorView = (IndicatorView) findViewById(R.id.indicator);
+//        mIndicatorView.addViewPager(mViewPager);
+//        mIndicatorView.setOnViewPagerChangeListener(this);
+//
+//
     }
 
-
-    @Override
-    public void setPresenter(AccountContract.Presenter presenter) {
-        this.mAccountPresenter = (AccountPresenter) presenter;
-    }
-
-    @Override
-    public void showCheckAccountInfoError(String error) {
-
-    }
-
-    @Override
-    public void showAccountResponseError(String error) {
-
-    }
-
-    @Override
-    public void showLoginLoading() {
-
-    }
-
-    @Override
-    public void showLoginSuccess() {
-
-    }
-
-    @Override
-    public void showCallSmsCodeSuccess() {
-
-    }
-
-    @Override
-    public void showCallSmsCodeLoading() {
-
-    }
-
-    @Override
-    public void showRegisterSuccess() {
-
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
 }

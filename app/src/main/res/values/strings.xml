@@ -13,4 +13,14 @@
 
     <string name="unfold_load_more_hint">展开查看更多</string>
     <string name="fold_load_less_hint">收缩显示更少</string>
+
+
+    <array name="text">
+        <item>aaaddd大大所大所大所ddddddddddddddddddddddddd</item>
+        <item>大大所大所大所dddddddddddddddd</item>
+        <item>楚乔楚乔楚乔楚乔楚乔楚乔楚乔楚乔楚乔楚乔楚乔楚乔楚乔楚乔</item>
+        <item>阿楚阿楚阿楚阿楚阿楚阿楚</item>
+        <item>hello</item>
+        <item>我们都是中国人啊啊啊啊啊</item>
+    </array>
 </resources>

@@ -2,53 +2,43 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lay_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@drawable/bg_work_info_active"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingBottom="6dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="6dp"
+    android:visibility="visible"
+    tools:visibility="visible">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingBottom="12dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="12dp">
+    <TextView
+        android:id="@+id/tv_hospital_name"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|left"
+        android:gravity="center|left"
+        android:textColor="@color/color_sheet_active"
+        android:textSize="14sp"
+        tools:ignore="RtlHardcoded"
+        tools:text="北京大学深圳医院"/>
 
-        <TextView
-            android:id="@+id/tv_hospital_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center|left"
-            android:gravity="center"
-            android:textColor="@color/color_sheet_active"
-            android:textSize="14sp"
-            tools:ignore="RtlHardcoded"
-            tools:text="北京大学深圳医院"/>
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/tv_dpt_name"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:gravity="center|right"
+        android:textColor="@color/color_sheet_active"
+        android:textSize="14sp"
+        tools:ignore="RtlHardcoded"
+        tools:text="心血管科"/>
 
-        <TextView
-            android:id="@+id/tv_dpt_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@color/color_sheet_active"
-            android:textSize="14sp"
-            tools:ignore="RtlHardcoded"
-            tools:text="心血管科"/>
-    </LinearLayout>
-
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="16dp"
-        android:background="@color/gray"
-        android:visibility="visible"
-        tools:ignore="RtlHardcoded"/>
 </LinearLayout>

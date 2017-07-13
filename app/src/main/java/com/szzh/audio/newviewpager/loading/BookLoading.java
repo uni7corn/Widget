@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
@@ -65,7 +64,7 @@ public class BookLoading extends FrameLayout {
 
     private void initView(Context context) {
 
-        LayoutInflater.from(context).inflate(R.layout.book_loading, this, true);
+      //  LayoutInflater.from(context).inflate(R.layout.book_loading, this, true);
 
         pageViews = new ArrayList<>();
 

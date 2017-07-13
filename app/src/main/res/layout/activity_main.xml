@@ -12,14 +12,13 @@
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="Button"/>
 
-    <com.szzh.audio.newviewpager.WorkInfoView
-        android:id="@+id/calender"
+    <com.szzh.audio.newviewpager.foldViewGroup.FoldLayout
+        android:id="@+id/work"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:layout_marginTop="32dp"/>
+        android:background="@color/white"/>
 
 </LinearLayout>

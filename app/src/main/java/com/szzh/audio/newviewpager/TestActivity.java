@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.szzh.audio.newviewpager.foldViewGroup.FoldLayout;
 import com.szzh.audio.newviewpager.textview.FoldTextView;
+
+import java.util.Arrays;
 
 /**
  * Created by jzz
@@ -15,34 +18,41 @@ import com.szzh.audio.newviewpager.textview.FoldTextView;
  * desc:
  */
 
-public class TestActivity extends AppCompatActivity implements FoldTextView.OnFoldListener, WorkInfoView.onItemOnClickListener {
+public class TestActivity extends AppCompatActivity implements FoldTextView.OnFoldListener, WorkInfoView.onItemOnClickListener, FoldLayout.onItemOnClickListener {
 
     private static final String TAG = "TestActivity";
-    private WorkInfoView mWorkInfoView;
+    //  private WorkInfoView mWorkInfoView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FoldLayout foldLayout = (FoldLayout) findViewById(R.id.work);
 
-        mWorkInfoView = (WorkInfoView) findViewById(R.id.calender);
+        String[] array = getResources().getStringArray(R.array.text);
 
-        mWorkInfoView.setAdapter().addItemOnclickListener(this);
+        foldLayout.setAdapter(Arrays.asList(array))
+                .addFootView()
+                .setItemOnClickListener(this);
 
-        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // calendarView.start();
-                if (v.getTag() == null) {
-                    // foldTextView.unfoldContent();
-                    v.setTag(true);
-                } else {
-                    //foldTextView.foldContent();
-                    v.setTag(null);
-                }
-            }
-        });
+//        mWorkInfoView = (WorkInfoView) findViewById(R.id.calender);
+//
+//        mWorkInfoView.setAdapter().addItemOnclickListener(this);
+//
+//        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // calendarView.start();
+//                if (v.getTag() == null) {
+//                    // foldTextView.unfoldContent();
+//                    v.setTag(true);
+//                } else {
+//                    //foldTextView.foldContent();
+//                    v.setTag(null);
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -65,5 +75,10 @@ public class TestActivity extends AppCompatActivity implements FoldTextView.OnFo
     @Override
     public void onWorkInfoItemClick(View v, int position, PoolDepartment department) {
 
+    }
+
+    @Override
+    public void onWorkInfoItemClick(View v, int position, String department) {
+        Log.e(TAG, "onWorkInfoItemClick: ----------->position=" + position + "  " + department);
     }
 }

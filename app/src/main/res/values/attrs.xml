@@ -31,5 +31,10 @@
         <attr name="chat_image_mask" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="FlowLayout">
+        <attr name="horizontalSpace" format="dimension" />
+        <attr name="verticalSpace" format="dimension" />
+    </declare-styleable>
+
 
 </resources>

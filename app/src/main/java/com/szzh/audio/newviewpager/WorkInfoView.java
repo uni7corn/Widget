@@ -6,7 +6,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -199,7 +198,6 @@ public class WorkInfoView extends FrameLayout implements View.OnClickListener {
 
         //折叠高度,剩余3个 item 的高度
         float foldHeight = height - defaultHeight;
-        Log.e(TAG, "onClick: ------>");
 
         //默认是折叠状态
         if (getTag() == null) {//展开

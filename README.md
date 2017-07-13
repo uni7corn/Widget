@@ -15,3 +15,5 @@
 
 ![日历控件](https://github.com/wuyalun198612/Widget/blob/master/picture/calender.gif "日历控件")
 
+# 可折叠/收缩的item布局容器
+![可折叠容器](https://github.com/wuyalun198612/Widget/blob/master/picture/foldLayout.gif "折叠容器")

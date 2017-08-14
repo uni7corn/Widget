@@ -7,9 +7,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.szzh.audio.newviewpager.foldViewGroup.FoldLayout;
+import com.szzh.audio.newviewpager.pathMeasure.CircleProgress;
 import com.szzh.audio.newviewpager.textview.FoldTextView;
-
-import java.util.Arrays;
 
 /**
  * Created by jzz
@@ -28,13 +27,10 @@ public class TestActivity extends AppCompatActivity implements FoldTextView.OnFo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FoldLayout foldLayout = (FoldLayout) findViewById(R.id.work);
+        CircleProgress foldLayout = (CircleProgress) findViewById(R.id.work);
 
         String[] array = getResources().getStringArray(R.array.text);
 
-        foldLayout.setAdapter(Arrays.asList(array))
-                .addFootView()
-                .setItemOnClickListener(this);
 
 //        mWorkInfoView = (WorkInfoView) findViewById(R.id.calender);
 //

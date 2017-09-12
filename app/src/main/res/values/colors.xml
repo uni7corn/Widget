@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">@color/bg_color</color>
+    <color name="colorPrimaryDark">@color/bg_color</color>
     <color name="colorAccent">#FF4081</color>
     <color name="pathColor">#FF4891EB</color>
 
@@ -47,12 +47,16 @@
 
     <!--sleepy progress view-->
     <color name="sleepy_bg_color">#fff2f3f5</color>
+    <color name="text_color">#9ff2f3f5</color>
 
     <color name="sleepy_one_color">#ff00bbfa</color>
     <color name="sleepy_two_color">#ff00a7fa</color>
     <color name="sleepy_three_color">#ff0096fa</color>
     <color name="sleepy_four_color">#ff0089fa</color>
     <color name="sleepy_five_color">#ff0075fa</color>
+
+    <color name="bg_color">#FF3B0175</color>
+    <color name="full_color">#10f2f3f5</color>
 
 
 </resources>

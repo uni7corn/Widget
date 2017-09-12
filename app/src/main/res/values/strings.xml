@@ -34,4 +34,11 @@
         <item>五</item>
         <item>六</item>
     </string-array>
+
+    <string-array name="label_text">
+        <item>清醒</item>
+        <item>快速眼动睡眠</item>
+        <item>浅睡</item>
+        <item>深睡</item>
+    </string-array>
 </resources>

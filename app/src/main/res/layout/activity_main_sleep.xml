@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.szzh.audio.newviewpager.histogram.DaySleepHistogramView
+        android:id="@+id/sleepy_data_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_color"
+        android:paddingLeft="@dimen/dp12"
+        android:paddingRight="@dimen/dp12" />
+
+</FrameLayout>

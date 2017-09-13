@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.szzh.audio.newviewpager.histogram.DaySleepHistogramView;
 import com.szzh.audio.newviewpager.sleepy.bean.SleepData;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class SleepyActivity extends AppCompatActivity {
 
-    private DaySleepHistogramView mDaySleepHistogramView;
+    // private DaySleepHistogramView mDaySleepHistogramView;
     private List<SleepData> mSleepDataList;
 
 
@@ -27,7 +26,7 @@ public class SleepyActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_sleep);
-        mDaySleepHistogramView = (DaySleepHistogramView) findViewById(R.id.sleepy_data_view);
+        //mDaySleepHistogramView = (DaySleepHistogramView) findViewById(R.id.sleepy_data_view);
         initData();
     }
 
@@ -210,7 +209,7 @@ public class SleepyActivity extends AppCompatActivity {
         // }
 
         //Collections.sort(mSleepDataList);
-        mDaySleepHistogramView.setData(mSleepDataList);
+        // mDaySleepHistogramView.setData(mSleepDataList);
     }
 
 

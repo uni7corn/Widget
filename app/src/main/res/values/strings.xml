@@ -35,6 +35,20 @@
         <item>六</item>
     </string-array>
 
+    <string-array name="sleep_times">
+        <item>20</item>
+        <item>18</item>
+        <item>16</item>
+        <item>14</item>
+        <item>12</item>
+        <item>10</item>
+        <item>08</item>
+        <item>06</item>
+        <item>04</item>
+        <item>02</item>
+        <item>00</item>
+    </string-array>
+
     <string-array name="label_text">
         <item>清醒</item>
         <item>快速眼动睡眠</item>

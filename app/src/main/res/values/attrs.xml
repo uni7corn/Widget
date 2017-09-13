@@ -2,38 +2,44 @@
 <resources>
 
     <declare-styleable name="IndicatorView">
-        <attr name="indicator_color" format="color"/>
-        <attr name="text_highlight_color" format="color"/>
-        <attr name="text_default_color" format="color"/>
-        <attr name="indicator_width" format="dimension"/>
+        <attr name="indicator_color" format="color" />
+        <attr name="text_highlight_color" format="color" />
+        <attr name="text_default_color" format="color" />
+        <attr name="indicator_width" format="dimension" />
 
     </declare-styleable>
 
 
     <declare-styleable name="LoadingProgress">
-        <attr name="loadingSize" format="dimension|reference"/>
-        <attr name="loadingColor" format="color|reference"/>
+        <attr name="loadingSize" format="dimension|reference" />
+        <attr name="loadingColor" format="color|reference" />
 
     </declare-styleable>
 
 
     <declare-styleable name="RotateLoading">
 
-        <attr name="loading_width" format="dimension"/>
+        <attr name="loading_width" format="dimension" />
 
-        <attr name="loading_color" format="color"/>
+        <attr name="loading_color" format="color" />
 
-        <attr name="shadow_position" format="integer"/>
+        <attr name="shadow_position" format="integer" />
 
     </declare-styleable>
 
     <declare-styleable name="BubbleImageView">
-        <attr name="chat_image_mask" format="reference"/>
+        <attr name="chat_image_mask" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="FlowLayout">
         <attr name="horizontalSpace" format="dimension" />
         <attr name="verticalSpace" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="WeekSleepHistogramView">
+        <attr name="report_type" format="integer|reference" />
+
     </declare-styleable>
 
 

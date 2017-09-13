@@ -97,17 +97,7 @@ public class DaySleepHistogramView extends View implements Runnable {
         squarePaint.setStyle(Paint.Style.FILL);
         squarePaint.setStrokeWidth(1.0f);
 
-
-        //  Paint fullPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        // fullPaint.setColor(getResources().getColor(R.color));
-
         this.mSquarePaint = squarePaint;
-
-
-       // mSleepDataList = new ArrayList<>();
-        //for (int i = 0; i < 30; i++) {
-
-
     }
 
 

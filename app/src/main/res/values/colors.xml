@@ -58,5 +58,10 @@
     <color name="bg_color">#FF3B0175</color>
     <color name="full_color">#10f2f3f5</color>
 
+    <color name="sober_color">#FFE3901F</color>
+    <color name="light_sleep_color">#FF1D92F0</color>
+    <color name="deep_sleep_color">#FF0D5A9E</color>
+    <color name="eog_color">#FF6BBAEE</color>
+
 
 </resources>

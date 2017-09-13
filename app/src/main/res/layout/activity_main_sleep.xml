@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.szzh.audio.newviewpager.histogram.DaySleepHistogramView
+    <com.szzh.audio.newviewpager.histogram.WeekSleepHistogramView
         android:id="@+id/sleepy_data_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_color"
+        android:background="@color/colorPrimary"
         android:paddingLeft="@dimen/dp12"
-        android:paddingRight="@dimen/dp12" />
+        android:paddingRight="@dimen/dp12"
+        android:paddingTop="@dimen/dp12" />
 
 </FrameLayout>

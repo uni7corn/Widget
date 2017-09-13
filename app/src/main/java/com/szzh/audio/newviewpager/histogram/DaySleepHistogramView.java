@@ -252,13 +252,10 @@ public class DaySleepHistogramView extends View implements Runnable {
 
         for (int i = 0; i < 4; i++) {
             canvas.drawText(labelText[i], getPaddingLeft(), itemHeight * (1.5f + i) + (textBounds.height() >> 1), textPaint);
-            if (i == 3) {
-                coordinatePaint.setColor(getResources().getColor(R.color.white));
-            }
-            canvas.drawPath(soberPath, coordinatePaint);
             soberPath.reset();
             soberPath.moveTo(getPaddingLeft(), (2 + i) * itemHeight);
             soberPath.lineTo(getWidth() - getPaddingRight(), (2 + i) * itemHeight);
+            canvas.drawPath(soberPath, coordinatePaint);
         }
     }
 
@@ -267,14 +264,14 @@ public class DaySleepHistogramView extends View implements Runnable {
         int size = MeasureSpec.getSize(heightMeasureSpec);
         switch (MeasureSpec.getMode(heightMeasureSpec)) {
             case MeasureSpec.EXACTLY://match_parent  或者指定的大小
-                int i = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 280.0f, getResources().getDisplayMetrics());
+                int i = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200.0f, getResources().getDisplayMetrics());
                 return Math.max(i, size);
             case MeasureSpec.AT_MOST:// wrap_content
-                return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 280.0f, getResources().getDisplayMetrics());
+                return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200.0f, getResources().getDisplayMetrics());
             case MeasureSpec.UNSPECIFIED:
                 break;
         }
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 280.0f, getResources().getDisplayMetrics());
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200.0f, getResources().getDisplayMetrics());
     }
 
     @Override

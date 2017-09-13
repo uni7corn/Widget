@@ -93,7 +93,7 @@ public class DaySleepHistogramView extends View implements Runnable {
         this.mLabelText = labelText;
 
         Paint squarePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        squarePaint.setColor(getResources().getColor(R.color.sleepy_one_color));
+        squarePaint.setColor(getResources().getColor(R.color.sober_color));
         squarePaint.setStyle(Paint.Style.FILL);
         squarePaint.setStrokeWidth(1.0f);
 
@@ -204,19 +204,19 @@ public class DaySleepHistogramView extends View implements Runnable {
                     rect.top = (int) ((int) (1.5 * itemHeight) * mProgress);
                     rect.right = (int) (right * mProgress);
                     rect.bottom = 2 * itemHeight;
-                    squarePaint.setColor(getResources().getColor(R.color.schedule_font_color));
+                    squarePaint.setColor(getResources().getColor(R.color.sober_color));
                     break;
                 case 0x02://深睡
                     rect.top = (int) (4 * itemHeight * mProgress);
                     rect.right = (int) (right * mProgress);
                     rect.bottom = 5 * itemHeight;
-                    squarePaint.setColor(getResources().getColor(R.color.sleepy_five_color));
+                    squarePaint.setColor(getResources().getColor(R.color.deep_sleep_color));
                     break;
                 case 0x03://浅睡
                     rect.top = (int) (3 * itemHeight * mProgress);
                     rect.right = (int) (right * mProgress);
                     rect.bottom = 4 * itemHeight;
-                    squarePaint.setColor(getResources().getColor(R.color.sleepy_one_color));
+                    squarePaint.setColor(getResources().getColor(R.color.light_sleep_color));
                     break;
                 case 0x04://快速眼动睡眠
                     break;

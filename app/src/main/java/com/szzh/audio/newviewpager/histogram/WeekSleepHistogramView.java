@@ -123,7 +123,7 @@ public class WeekSleepHistogramView extends View {
         this.mYLabel = getResources().getStringArray(R.array.sleep_times);
 
         Paint squarePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        squarePaint.setColor(getResources().getColor(R.color.sleepy_one_color));
+        squarePaint.setColor(getResources().getColor(R.color.sober_color));
         squarePaint.setStyle(Paint.Style.FILL);
         squarePaint.setStrokeWidth(1.0f);
 

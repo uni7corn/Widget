@@ -348,13 +348,13 @@ public class SleepProgress extends View implements Runnable {
                     progressPaint.setColor(getResources().getColor(R.color.schedule_translate));
                     continue;
                 case 0x01://清醒
-                    progressPaint.setColor(getResources().getColor(R.color.schedule_font_color));
+                    progressPaint.setColor(getResources().getColor(R.color.sober_color));
                     break;
                 case 0x02://深睡
-                    progressPaint.setColor(getResources().getColor(R.color.sleepy_five_color));
+                    progressPaint.setColor(getResources().getColor(R.color.deep_sleep_color));
                     break;
                 case 0x03://浅睡
-                    progressPaint.setColor(getResources().getColor(R.color.sleepy_one_color));
+                    progressPaint.setColor(getResources().getColor(R.color.light_sleep_color));
                     break;
                 default:
                     break;

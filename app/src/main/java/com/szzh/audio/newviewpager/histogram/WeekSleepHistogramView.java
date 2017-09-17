@@ -32,8 +32,6 @@ public class WeekSleepHistogramView extends View {
     private TextPaint mTextPaint;//文本画笔
 
     private Paint mSquarePaint;//直方图画笔
-    private int mCenterX;
-    private int mCenterY;
     private int mItemHeight;
     private int mItemWidth;
     private String[] mYLabel;
@@ -61,7 +59,7 @@ public class WeekSleepHistogramView extends View {
     private void init() {
         //1.init  坐标系画笔
         Paint coordinatePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        coordinatePaint.setColor(getResources().getColor(R.color.sleepy_bg_color));
+        coordinatePaint.setColor(getResources().getColor(R.color.sleep_text_color));
         coordinatePaint.setStrokeCap(Paint.Cap.ROUND);
         coordinatePaint.setStrokeJoin(Paint.Join.ROUND);
         coordinatePaint.setStrokeWidth(1.0f);
@@ -70,7 +68,7 @@ public class WeekSleepHistogramView extends View {
 
         //2.init  文本画笔
         TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        textPaint.setColor(getResources().getColor(R.color.sleepy_bg_color));
+        textPaint.setColor(getResources().getColor(R.color.sleep_text_color));
         textPaint.setStrokeCap(Paint.Cap.ROUND);
         textPaint.setStrokeJoin(Paint.Join.ROUND);
         textPaint.setTextAlign(Paint.Align.CENTER);
@@ -81,7 +79,7 @@ public class WeekSleepHistogramView extends View {
 
         Rect bounds = new Rect();
 
-        String[] yLabel = getResources().getStringArray(R.array.sleep_times);
+        String[] yLabel = getResources().getStringArray(R.array.sleep_y_label);
 
         String measureText = yLabel[0];
 
@@ -126,30 +124,30 @@ public class WeekSleepHistogramView extends View {
         int contentWidth = w - paddingLeft - paddingRight;
         int contentHeight = h - paddingTop - paddingBottom;
 
-        this.mCenterX = w >> 1;
-        this.mCenterY = h >> 1;
+        // int centerX = w >> 1;
+        // int centerY = h >> 1;
 
         int itemWidth;
 
         List<DaySleepy> daySleepies = this.mDaySleepies;
 
         if (daySleepies == null || daySleepies.isEmpty() || daySleepies.size() < 7) {
-            itemWidth = contentWidth >> 3;
+            itemWidth = contentWidth >> 3;//当数据小于7条时,1+7=8  (y 坐标+一周7天)=8格
         } else {
-            itemWidth = contentWidth / (daySleepies.size() + 1);
+            itemWidth = contentWidth / (daySleepies.size() + 1);//一个多少个数据段,那么为数据+1
         }
 
-        int itemHeight = contentHeight / 28;
+        int itemHeight = contentHeight / 28;//默认一共有28格高
 
         Rect textBounds = this.mTextBounds;
-          int textWidth = textBounds.width();
+        int textWidth = textBounds.width();
         int TextHeight = textBounds.height();
         int halfTextHeight = TextHeight >> 1;
         // Log.e(TAG, "onSizeChanged: ----------->itemWidth=" + itemWidth + "   itemHeight=" + itemHeight + "  textHeight=" + textBounds.height() + "   textWidth=" + textBounds.width());
 
         Path coordinatePath = new Path();
-        coordinatePath.moveTo(paddingLeft + (itemWidth-textWidth), paddingTop + itemHeight);
-        coordinatePath.lineTo(paddingLeft + (itemWidth-textWidth), paddingTop + itemHeight * 27 - halfTextHeight);
+        coordinatePath.moveTo(paddingLeft + (itemWidth - textWidth + 10), paddingTop + itemHeight);
+        coordinatePath.lineTo(paddingLeft + (itemWidth - textWidth + 10), paddingTop + itemHeight * 27 - halfTextHeight);
         coordinatePath.lineTo(paddingLeft + contentWidth - halfTextHeight, paddingTop + itemHeight * 27 - halfTextHeight);
 
         this.mCoordinatePath = coordinatePath;
@@ -187,14 +185,10 @@ public class WeekSleepHistogramView extends View {
 
         y = getPaddingTop() + 28 * itemHeight;
 
-        //区间0-24 共10格,每一个2小时
-
-        int hour = itemHeight >> 2;
-
         for (int i = 0; i < len; i++) {
             DaySleepy daySleepy = daySleepies.get(i);
 
-            String date = daySleepy.getDate().split("/")[1];
+            Today today = daySleepy.getToday();
 
             rectF.left = x + (itemWidth >> 2);
             rectF.right = x + itemWidth / 4 * 3;
@@ -204,8 +198,8 @@ public class WeekSleepHistogramView extends View {
             int deepSleepCount = daySleepy.getDeepSleepCount();//深睡数据
             if (deepSleepCount > 0) {
                 squarePaint.setColor(getResources().getColor(R.color.deep_sleep_color));
-                rectF.bottom = getPaddingTop() + 27 * itemHeight - (textBounds.height() >> 1);
-                rectF.top = rectF.bottom - (deepSleepCount * hour);
+                rectF.bottom = getPaddingTop() + 27 * itemHeight - (textBounds.height() >> 1) - 1;
+                rectF.top = rectF.bottom - (deepSleepCount / 60.0f * itemHeight);
                 canvas.drawRect(rectF, squarePaint);
             }
 
@@ -213,7 +207,7 @@ public class WeekSleepHistogramView extends View {
             if (lightSleepCount > 0) {
                 squarePaint.setColor(getResources().getColor(R.color.light_sleep_color));
                 rectF.bottom = rectF.top;
-                rectF.top = rectF.bottom - (lightSleepCount * hour);
+                rectF.top = rectF.bottom - (lightSleepCount / 60.0f * itemHeight);
                 canvas.drawRect(rectF, squarePaint);
             }
 
@@ -221,7 +215,7 @@ public class WeekSleepHistogramView extends View {
             if (eogCount > 0) {
                 squarePaint.setColor(getResources().getColor(R.color.eog_color));
                 rectF.bottom = rectF.top;
-                rectF.top = rectF.bottom - (eogCount * hour);
+                rectF.top = rectF.bottom - (eogCount / 60.0f * itemHeight);
                 canvas.drawRect(rectF, squarePaint);
             }
 
@@ -229,11 +223,11 @@ public class WeekSleepHistogramView extends View {
             if (soberCount > 0) {
                 squarePaint.setColor(getResources().getColor(R.color.sober_color));
                 rectF.bottom = rectF.top;
-                rectF.top = rectF.bottom - (soberCount * hour);
+                rectF.top = rectF.bottom - (soberCount / 60.0f * itemHeight);
                 canvas.drawRect(rectF, squarePaint);
             }
 
-            canvas.drawText(date, rectF.centerX(), y, textPaint);
+            canvas.drawText(today.getMonth() + "/" + today.getDate(), rectF.centerX(), y, textPaint);
 
 
             x += itemWidth;
@@ -285,18 +279,17 @@ public class WeekSleepHistogramView extends View {
     }
 
     private int measureHeight(int heightMeasureSpec) {
-
         int size = MeasureSpec.getSize(heightMeasureSpec);
-
         switch (MeasureSpec.getMode(heightMeasureSpec)) {
             case MeasureSpec.EXACTLY://match_parent  或者指定的大小
             case MeasureSpec.AT_MOST:// wrap_content
+            case MeasureSpec.UNSPECIFIED:
                 Rect textBounds = this.mTextBounds;
                 int textHeight = textBounds.height();
                 int height = textHeight * 29;
-                return Math.min(size, height);
-            case MeasureSpec.UNSPECIFIED:
-                return size;
+                if (height > size) {//最小的高度
+                    size = height;
+                }
         }
         return size;
     }

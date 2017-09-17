@@ -10,11 +10,12 @@ package com.szzh.audio.newviewpager.histogram;
 public class DaySleepy {
 
     private int id;//主键
-    private int deepSleepCount;// 深睡时长统计   单位:小时
-    private int soberCount;//清醒时长统计        单位:小时
-    private int lightSleepCount;//浅睡时长统计   单位:小时
-    private int eogCount;//快速眼动时长统计       单位:小时
-    private String date;//睡眠数据统计日期
+    private int deepSleepCount;// 深睡时长统计   单位:min
+    private int soberCount;//清醒时长统计        单位:min
+    private int lightSleepCount;//浅睡时长统计   单位:min
+    private int eogCount;//快速眼动时长统计       单位:min
+    private int sleepCount;//睡眠总时长统计      单位:min
+    private Today today;//睡眠数据统计日期  yyyy-mm-dd
 
     public int getId() {
         return id;
@@ -61,39 +62,22 @@ public class DaySleepy {
         return this;
     }
 
-    public String getDate() {
-        return date;
+    public int getSleepCount() {
+        return sleepCount;
     }
 
-    public DaySleepy setDate(String date) {
-        this.date = date;
+    public DaySleepy setSleepCount(int sleepCount) {
+        this.sleepCount = sleepCount;
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DaySleepy)) return false;
-
-        DaySleepy daySleepy = (DaySleepy) o;
-
-        if (getId() != daySleepy.getId()) return false;
-        if (getDeepSleepCount() != daySleepy.getDeepSleepCount()) return false;
-        if (getSoberCount() != daySleepy.getSoberCount()) return false;
-        if (getLightSleepCount() != daySleepy.getLightSleepCount()) return false;
-        if (getEogCount() != daySleepy.getEogCount()) return false;
-        return getDate() != null ? getDate().equals(daySleepy.getDate()) : daySleepy.getDate() == null;
+    public Today getToday() {
+        return today;
     }
 
-    @Override
-    public int hashCode() {
-        int result = getId();
-        result = 31 * result + getDeepSleepCount();
-        result = 31 * result + getSoberCount();
-        result = 31 * result + getLightSleepCount();
-        result = 31 * result + getEogCount();
-        result = 31 * result + (getDate() != null ? getDate().hashCode() : 0);
-        return result;
+    public DaySleepy setToday(Today today) {
+        this.today = today;
+        return this;
     }
 
     @Override
@@ -104,7 +88,8 @@ public class DaySleepy {
                 ", soberCount=" + soberCount +
                 ", lightSleepCount=" + lightSleepCount +
                 ", eogCount=" + eogCount +
-                ", date='" + date + '\'' +
+                ", sleepCount=" + sleepCount +
+                ", today=" + today +
                 '}';
     }
 }

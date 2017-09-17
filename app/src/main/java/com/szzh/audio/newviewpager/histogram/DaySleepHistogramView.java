@@ -32,8 +32,6 @@ public class DaySleepHistogramView extends View implements Runnable {
     private Paint mCoordinatePaint;//坐标系画笔
     private TextPaint mTextPaint;//文本画笔
     private Paint mSquarePaint;//直方图画笔
-    private int mCenterX;
-    private int mCenterY;
     private Path mHorizontalPath;
     private RectF mFullRectF;
     private int mItemHeight;
@@ -120,8 +118,8 @@ public class DaySleepHistogramView extends View implements Runnable {
         int contentWidth = w - paddingLeft - paddingRight;
         int contentHeight = h - paddingTop - paddingBottom;
 
-        this.mCenterX = w >> 1;
-        this.mCenterY = h >> 1;
+        // int centerX = w >> 1;
+        // int centerY = h >> 1;
 
         int itemWidth = contentWidth >> 2;
         int itemHeight = contentHeight / 7;

@@ -35,7 +35,7 @@
         <item>六</item>
     </string-array>
 
-    <string-array name="sleep_times">
+    <string-array name="sleep_y_label">
         <item>0h</item>
         <item>2h</item>
         <item>4h</item>

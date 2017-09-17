@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.szzh.audio.newviewpager.histogram.DaySleepy;
+import com.szzh.audio.newviewpager.histogram.Today;
 import com.szzh.audio.newviewpager.histogram.WeekSleepHistogramView;
 import com.szzh.audio.newviewpager.sleepy.bean.SleepData;
 
@@ -33,7 +34,7 @@ public class SleepyActivity extends AppCompatActivity {
 
         List<DaySleepy> daySleepies = initWeekData();
 
-        List<DaySleepy> sleepies = daySleepies.subList(0, 9);
+        List<DaySleepy> sleepies = daySleepies.subList(0, 30);
 
         Log.e("TAG", "onCreate: ------------>" + sleepies.size());
 
@@ -232,11 +233,11 @@ public class SleepyActivity extends AppCompatActivity {
 
         daySleepy = new DaySleepy()
                 .setId(1)
-                .setSoberCount(2)
+                .setSoberCount(60)
                 .setEogCount(3)
-                .setLightSleepCount(5)
-                .setDeepSleepCount(4)
-                .setDate("9/1");
+                .setLightSleepCount(60)
+                .setDeepSleepCount(60)
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(1));
 
         daySleepies.add(daySleepy);
 
@@ -247,7 +248,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/2");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(2));
 
         daySleepies.add(daySleepy);
 
@@ -258,7 +259,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/3");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(3));
 
         daySleepies.add(daySleepy);
 
@@ -269,7 +270,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/4");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(4));
 
         daySleepies.add(daySleepy);
 
@@ -280,7 +281,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/5");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(5));
 
         daySleepies.add(daySleepy);
 
@@ -290,18 +291,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/6");
-
-        daySleepies.add(daySleepy);
-
-
-        daySleepy = new DaySleepy()
-                .setId(1)
-                .setSoberCount(2)
-                .setEogCount(3)
-                .setLightSleepCount(5)
-                .setDeepSleepCount(4)
-                .setDate("9/7");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(6));
 
         daySleepies.add(daySleepy);
 
@@ -312,7 +302,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/8");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(7));
 
         daySleepies.add(daySleepy);
 
@@ -323,7 +313,18 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/9");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(8));
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(9));
 
         daySleepies.add(daySleepy);
 
@@ -333,7 +334,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(4)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(5)
-                .setDate("9/10");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(10));
 
         daySleepies.add(daySleepy);
 
@@ -344,7 +345,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(2)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(2)
-                .setDate("9/11");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(11));
 
         daySleepies.add(daySleepy);
 
@@ -354,7 +355,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(0)
                 .setLightSleepCount(0)
                 .setDeepSleepCount(0)
-                .setDate("9/12");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(12));
 
         daySleepies.add(daySleepy);
 
@@ -364,7 +365,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(2)
                 .setLightSleepCount(3)
                 .setDeepSleepCount(5)
-                .setDate("9/13");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(13));
 
         daySleepies.add(daySleepy);
 
@@ -375,7 +376,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(4)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(2)
-                .setDate("9/14");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(14));
 
         daySleepies.add(daySleepy);
 
@@ -386,7 +387,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(3)
                 .setDeepSleepCount(2)
-                .setDate("9/15");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(15));
 
         daySleepies.add(daySleepy);
 
@@ -396,7 +397,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/16");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(16));
 
         daySleepies.add(daySleepy);
 
@@ -406,18 +407,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/17");
-
-        daySleepies.add(daySleepy);
-
-
-        daySleepy = new DaySleepy()
-                .setId(1)
-                .setSoberCount(2)
-                .setEogCount(3)
-                .setLightSleepCount(5)
-                .setDeepSleepCount(4)
-                .setDate("9/18");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(17));
 
         daySleepies.add(daySleepy);
 
@@ -428,7 +418,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/19");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(18));
 
         daySleepies.add(daySleepy);
 
@@ -439,37 +429,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/20");
-
-        daySleepies.add(daySleepy);
-
-        daySleepy = new DaySleepy()
-                .setId(1)
-                .setSoberCount(2)
-                .setEogCount(3)
-                .setLightSleepCount(5)
-                .setDeepSleepCount(4)
-                .setDate("9/21");
-
-        daySleepies.add(daySleepy);
-
-        daySleepy = new DaySleepy()
-                .setId(1)
-                .setSoberCount(2)
-                .setEogCount(3)
-                .setLightSleepCount(5)
-                .setDeepSleepCount(4)
-                .setDate("9/22");
-
-        daySleepies.add(daySleepy);
-
-        daySleepy = new DaySleepy()
-                .setId(1)
-                .setSoberCount(2)
-                .setEogCount(3)
-                .setLightSleepCount(5)
-                .setDeepSleepCount(4)
-                .setDate("9/23");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(19));
 
         daySleepies.add(daySleepy);
 
@@ -480,7 +440,37 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/24");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(20));
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(21));
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(22));
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(23));
 
         daySleepies.add(daySleepy);
 
@@ -491,7 +481,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/25");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(24));
 
         daySleepies.add(daySleepy);
 
@@ -502,7 +492,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/26");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(25));
 
         daySleepies.add(daySleepy);
 
@@ -513,7 +503,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/27");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(26));
 
         daySleepies.add(daySleepy);
 
@@ -524,7 +514,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/28");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(27));
 
         daySleepies.add(daySleepy);
 
@@ -535,7 +525,7 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/29");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(28));
 
         daySleepies.add(daySleepy);
 
@@ -546,7 +536,18 @@ public class SleepyActivity extends AppCompatActivity {
                 .setEogCount(3)
                 .setLightSleepCount(5)
                 .setDeepSleepCount(4)
-                .setDate("9/30");
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(29));
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setToday(new Today().setYear(2017).setMonth(9).setDate(30));
 
         daySleepies.add(daySleepy);
 

@@ -3,7 +3,10 @@ package com.szzh.audio.newviewpager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
+import com.szzh.audio.newviewpager.histogram.DaySleepy;
+import com.szzh.audio.newviewpager.histogram.WeekSleepHistogramView;
 import com.szzh.audio.newviewpager.sleepy.bean.SleepData;
 
 import java.util.ArrayList;
@@ -18,7 +21,7 @@ import java.util.List;
 
 public class SleepyActivity extends AppCompatActivity {
 
-    // private DaySleepHistogramView mDaySleepHistogramView;
+    private WeekSleepHistogramView mWeekSleepHistogramView;
     private List<SleepData> mSleepDataList;
 
 
@@ -26,11 +29,19 @@ public class SleepyActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_sleep);
-        //mDaySleepHistogramView = (DaySleepHistogramView) findViewById(R.id.sleepy_data_view);
-        initData();
+        mWeekSleepHistogramView = (WeekSleepHistogramView) findViewById(R.id.sleepy_data_view);
+
+        List<DaySleepy> daySleepies = initWeekData();
+
+        List<DaySleepy> sleepies = daySleepies.subList(0, 9);
+
+        Log.e("TAG", "onCreate: ------------>" + sleepies.size());
+
+        mWeekSleepHistogramView.addSleepData(sleepies);
+        //initDayData();
     }
 
-    private void initData() {
+    private void initDayData() {
         mSleepDataList = new ArrayList<>();
         SleepData sleepData1 = new SleepData()
                 .setId(1)
@@ -210,6 +221,336 @@ public class SleepyActivity extends AppCompatActivity {
 
         //Collections.sort(mSleepDataList);
         // mDaySleepHistogramView.setData(mSleepDataList);
+    }
+
+
+    private List<DaySleepy> initWeekData() {
+
+        List<DaySleepy> daySleepies = new ArrayList<>();
+
+        DaySleepy daySleepy;
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/1");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/2");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/3");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/4");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/5");
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/6");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/7");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/8");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/9");
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(3)
+                .setEogCount(4)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(5)
+                .setDate("9/10");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(3)
+                .setEogCount(2)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(2)
+                .setDate("9/11");
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(0)
+                .setSoberCount(0)
+                .setEogCount(0)
+                .setLightSleepCount(0)
+                .setDeepSleepCount(0)
+                .setDate("9/12");
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(3)
+                .setEogCount(2)
+                .setLightSleepCount(3)
+                .setDeepSleepCount(5)
+                .setDate("9/13");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(3)
+                .setEogCount(4)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(2)
+                .setDate("9/14");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(3)
+                .setEogCount(3)
+                .setLightSleepCount(3)
+                .setDeepSleepCount(2)
+                .setDate("9/15");
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/16");
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/17");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/18");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/19");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/20");
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/21");
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/22");
+
+        daySleepies.add(daySleepy);
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/23");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/24");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/25");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/26");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/27");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/28");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/29");
+
+        daySleepies.add(daySleepy);
+
+
+        daySleepy = new DaySleepy()
+                .setId(1)
+                .setSoberCount(2)
+                .setEogCount(3)
+                .setLightSleepCount(5)
+                .setDeepSleepCount(4)
+                .setDate("9/30");
+
+        daySleepies.add(daySleepy);
+
+        return daySleepies;
     }
 
 

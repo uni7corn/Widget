@@ -314,6 +314,7 @@ public class DaySleepHistogramView extends View implements Runnable {
             fullTimeQuantum += sleepData.getTimeQuantum();
         }
 
+        this.mCellWidth = mFullRectF.width() / fullTimeQuantum;
         this.mFullTimeQuantum = fullTimeQuantum;
 
         postInvalidateDelayed(16);

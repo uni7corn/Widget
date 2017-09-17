@@ -36,17 +36,19 @@
     </string-array>
 
     <string-array name="sleep_times">
-        <item>20</item>
-        <item>18</item>
-        <item>16</item>
-        <item>14</item>
-        <item>12</item>
-        <item>10</item>
-        <item>08</item>
-        <item>06</item>
-        <item>04</item>
-        <item>02</item>
-        <item>00</item>
+        <item>0h</item>
+        <item>2h</item>
+        <item>4h</item>
+        <item>6h</item>
+        <item>8h</item>
+        <item>10h</item>
+        <item>12h</item>
+        <item>14h</item>
+        <item>16h</item>
+        <item>18h</item>
+        <item>20h</item>
+        <item>22h</item>
+        <item>24h</item>
     </string-array>
 
     <string-array name="label_text">

@@ -16,11 +16,11 @@ public class DaySleepy {
     private int eogCount;//快速眼动时长统计       单位:小时
     private String date;//睡眠数据统计日期
 
-    int getId() {
+    public int getId() {
         return id;
     }
 
-    DaySleepy setId(int id) {
+    public DaySleepy setId(int id) {
         this.id = id;
         return this;
     }

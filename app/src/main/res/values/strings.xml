@@ -23,4 +23,38 @@
         <item>hello</item>
         <item>我们都是中国人啊啊啊啊啊</item>
     </array>
+
+
+    <string-array name="weeks">
+        <item>日</item>
+        <item>一</item>
+        <item>二</item>
+        <item>三</item>
+        <item>四</item>
+        <item>五</item>
+        <item>六</item>
+    </string-array>
+
+    <string-array name="sleep_y_label">
+        <item>0h</item>
+        <item>2h</item>
+        <item>4h</item>
+        <item>6h</item>
+        <item>8h</item>
+        <item>10h</item>
+        <item>12h</item>
+        <item>14h</item>
+        <item>16h</item>
+        <item>18h</item>
+        <item>20h</item>
+        <item>22h</item>
+        <item>24h</item>
+    </string-array>
+
+    <string-array name="label_text">
+        <item>清醒</item>
+        <item>快速眼动睡眠</item>
+        <item>浅睡</item>
+        <item>深睡</item>
+    </string-array>
 </resources>

@@ -6,4 +6,10 @@
     <dimen name="book_border">10dp</dimen>
     <dimen name="page_border">5dp</dimen>
     <dimen name="book_padding">15dp</dimen>
+    <dimen name="dp2">2dp</dimen>
+    <dimen name="dp12">12dp</dimen>
+    <dimen name="dp4">4dp</dimen>
+    <dimen name="dp8">8dp</dimen>
+    <dimen name="sp15">15sp</dimen>
+    <dimen name="sp30">30sp</dimen>
 </resources>

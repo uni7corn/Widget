@@ -10,13 +10,13 @@ import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.szzh.audio.newviewpager.R;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by jzz
@@ -28,6 +28,7 @@ import java.util.List;
 public class WeekSleepHistogramView extends View {
 
     private static final String TAG = "WeekSleepHistogramView";
+
     private Paint mCoordinatePaint;//坐标系画笔
     private TextPaint mTextPaint;//文本画笔
 
@@ -101,15 +102,6 @@ public class WeekSleepHistogramView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
-
-        Log.e(TAG, "onMeasure: ------------->");
-    }
-
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        Log.e(TAG, "onLayout: -------------->left=" + left + "  top=" + top + "  right=" + right + " bottom=" + bottom + "  " + getWidth());
     }
 
     @Override
@@ -134,7 +126,7 @@ public class WeekSleepHistogramView extends View {
         if (daySleepies == null || daySleepies.isEmpty() || daySleepies.size() < 7) {
             itemWidth = contentWidth >> 3;//当数据小于7条时,1+7=8  (y 坐标+一周7天)=8格
         } else {
-            itemWidth = contentWidth / (daySleepies.size() + 1);//一个多少个数据段,那么为数据+1
+            itemWidth = contentWidth / (daySleepies.size() + 1);
         }
 
         int itemHeight = contentHeight / 28;//默认一共有28格高
@@ -143,7 +135,6 @@ public class WeekSleepHistogramView extends View {
         int textWidth = textBounds.width();
         int TextHeight = textBounds.height();
         int halfTextHeight = TextHeight >> 1;
-        // Log.e(TAG, "onSizeChanged: ----------->itemWidth=" + itemWidth + "   itemHeight=" + itemHeight + "  textHeight=" + textBounds.height() + "   textWidth=" + textBounds.width());
 
         Path coordinatePath = new Path();
         coordinatePath.moveTo(paddingLeft + (itemWidth - textWidth + 10), paddingTop + itemHeight);
@@ -182,7 +173,6 @@ public class WeekSleepHistogramView extends View {
 
         RectF rectF = new RectF();
 
-
         y = getPaddingTop() + 28 * itemHeight;
 
         for (int i = 0; i < len; i++) {
@@ -191,7 +181,7 @@ public class WeekSleepHistogramView extends View {
             Today today = daySleepy.getToday();
 
             rectF.left = x + (itemWidth >> 2);
-            rectF.right = x + itemWidth / 4 * 3;
+            rectF.right = x + (itemWidth >> 2) * 3;
 
             // Log.e(TAG, "drawSleepy: ------------>daySleepy=" + daySleepy.toString());
 
@@ -227,8 +217,7 @@ public class WeekSleepHistogramView extends View {
                 canvas.drawRect(rectF, squarePaint);
             }
 
-            canvas.drawText(today.getMonth() + "/" + today.getDate(), rectF.centerX(), y, textPaint);
-
+            canvas.drawText(String.format(Locale.getDefault(), "%d%s%d", today.getMonth(), "/", today.getDate()), rectF.centerX(), y, textPaint);
 
             x += itemWidth;
         }

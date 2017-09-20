@@ -57,14 +57,14 @@ public class DaySleepHistogramView extends View implements Runnable {
 
     public DaySleepHistogramView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
+        init();
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void init() {
 
         //1.init  坐标系画笔
         Paint coordinatePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        coordinatePaint.setColor(getResources().getColor(R.color.sleepy_bg_color));
+        coordinatePaint.setColor(getResources().getColor(R.color.sleep_text_color));
         coordinatePaint.setStrokeCap(Paint.Cap.ROUND);
         coordinatePaint.setStrokeWidth(1.0f);
         coordinatePaint.setStyle(Paint.Style.STROKE);
@@ -72,7 +72,7 @@ public class DaySleepHistogramView extends View implements Runnable {
 
         //2.init  文本画笔
         TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        textPaint.setColor(getResources().getColor(R.color.sleepy_bg_color));
+        textPaint.setColor(getResources().getColor(R.color.sleep_text_color));
         textPaint.setStrokeCap(Paint.Cap.ROUND);
         textPaint.setStrokeJoin(Paint.Join.ROUND);
         textPaint.setTextAlign(Paint.Align.LEFT);
@@ -96,6 +96,8 @@ public class DaySleepHistogramView extends View implements Runnable {
         squarePaint.setStrokeWidth(1.0f);
 
         this.mSquarePaint = squarePaint;
+
+        this.mFullRectF=new RectF();
     }
 
 
@@ -118,23 +120,23 @@ public class DaySleepHistogramView extends View implements Runnable {
         int contentWidth = w - paddingLeft - paddingRight;
         int contentHeight = h - paddingTop - paddingBottom;
 
-        // int centerX = w >> 1;
-        // int centerY = h >> 1;
+        // this.mCenterX = w >> 1;
+        //this.mCenterY = h >> 1;
 
         int itemWidth = contentWidth >> 2;
-        int itemHeight = contentHeight / 7;
+        int itemHeight = contentHeight / 5;
 
         Path horizontalPath = new Path();
-        horizontalPath.moveTo(paddingLeft, itemHeight * 2);
-        horizontalPath.lineTo(w - paddingRight, itemHeight * 2);
+        horizontalPath.moveTo(paddingLeft, itemHeight << 1);
+        horizontalPath.lineTo(w - paddingRight, itemHeight << 1);
 
         this.mHorizontalPath = horizontalPath;
 
         RectF sumRectF = new RectF();
         sumRectF.left = itemWidth;
-        sumRectF.top = itemHeight * 2;
+        sumRectF.top = itemHeight << 1;
         sumRectF.right = w - paddingRight;
-        sumRectF.bottom = itemHeight * 5;
+        sumRectF.bottom = itemHeight * 4;
 
         this.mFullRectF = sumRectF;
 
@@ -154,16 +156,24 @@ public class DaySleepHistogramView extends View implements Runnable {
     }
 
     private void drawSleep(Canvas canvas) {
-        List<SleepData> sleepDataList = this.mSleepDataList;
-        if (sleepDataList == null || sleepDataList.isEmpty()) return;
 
+        TextPaint textPaint = this.mTextPaint;
         int itemWidth = this.mItemWidth;
         int itemHeight = this.mItemHeight;
+        Rect textBounds = this.mTextBounds;
+
+        List<SleepData> sleepDataList = this.mSleepDataList;
+
+        if (sleepDataList == null || sleepDataList.isEmpty()) {
+            //默认起止时间
+            canvas.drawText("20:00", itemWidth, itemHeight * 4.0f + textBounds.height(), textPaint);
+            canvas.drawText("20:00", 4.0f * itemWidth - textBounds.width(), itemHeight * 4.0f + textBounds.height(), textPaint);
+            return;
+        }
+
         float cellWidth = this.mCellWidth;
         Paint squarePaint = this.mSquarePaint;
 
-        TextPaint textPaint = this.mTextPaint;
-        Rect textBounds = this.mTextBounds;
 
         Rect rect = new Rect();
 
@@ -181,13 +191,13 @@ public class DaySleepHistogramView extends View implements Runnable {
             if (i == 0) {
                 fromTime = sleepDataList.get(0).getFromTime();
                 //draw fromTime
-                canvas.drawText(String.format(Locale.getDefault(), "%02d%s%02d", (fromTime / 100), ":", ((fromTime / 10) % 10 * 10 + (fromTime % 10))), itemWidth, itemHeight * 5.0f + textBounds.height(), textPaint);
+                canvas.drawText(String.format(Locale.getDefault(), "%02d%s%02d", (fromTime / 100), ":", ((fromTime / 10) % 10 * 10 + (fromTime % 10))), itemWidth, itemHeight * 4.0f + textBounds.height(), textPaint);
             }
 
             if (i == sleepDataList.size() - 1) {
                 toTime = sleepDataList.get(sleepDataList.size() - 1).getToTime();
                 //draw toTime
-                canvas.drawText(String.format(Locale.getDefault(), "%02d%s%02d", (toTime / 100), ":", ((toTime / 10) % 10 * 10 + (toTime % 10))), 4.0f * itemWidth - textBounds.width(), itemHeight * 5.0f + textBounds.height(), textPaint);
+                canvas.drawText(String.format(Locale.getDefault(), "%02d%s%02d", (toTime / 100), ":", ((toTime / 10) % 10 * 10 + (toTime % 10))), 4.0f * itemWidth - textBounds.width(), itemHeight * 4.0f + textBounds.height(), textPaint);
             }
 
             rect.left = left;//最开始的左边
@@ -199,21 +209,21 @@ public class DaySleepHistogramView extends View implements Runnable {
                     squarePaint.setColor(getResources().getColor(R.color.schedule_translate));
                     break;
                 case 0x01://清醒
-                    rect.top = (int) ((int) (1.5 * itemHeight) * mProgress);
+                    rect.top = (int) (itemHeight * mProgress);
                     rect.right = (int) (right * mProgress);
-                    rect.bottom = 2 * itemHeight;
+                    rect.bottom = 2 * itemHeight - 1;
                     squarePaint.setColor(getResources().getColor(R.color.sober_color));
                     break;
                 case 0x02://深睡
-                    rect.top = (int) (4 * itemHeight * mProgress);
+                    rect.top = (int) (3 * itemHeight * mProgress) + 1;
                     rect.right = (int) (right * mProgress);
-                    rect.bottom = 5 * itemHeight;
+                    rect.bottom = 4 * itemHeight - 1;
                     squarePaint.setColor(getResources().getColor(R.color.deep_sleep_color));
                     break;
                 case 0x03://浅睡
-                    rect.top = (int) (3 * itemHeight * mProgress);
+                    rect.top = (int) (2 * itemHeight * mProgress) + 1;
                     rect.right = (int) (right * mProgress);
-                    rect.bottom = 4 * itemHeight;
+                    rect.bottom = 3 * itemHeight - 1;
                     squarePaint.setColor(getResources().getColor(R.color.light_sleep_color));
                     break;
                 case 0x04://快速眼动睡眠
@@ -221,6 +231,7 @@ public class DaySleepHistogramView extends View implements Runnable {
                 default:
                     break;
             }
+
             canvas.drawRect(rect, squarePaint);
             left += width;
         }
@@ -246,9 +257,9 @@ public class DaySleepHistogramView extends View implements Runnable {
         canvas.drawRect(this.mFullRectF, coordinatePaint);
 
         coordinatePaint.setStyle(Paint.Style.STROKE);
-        coordinatePaint.setColor(getResources().getColor(R.color.sleepy_bg_color));
+        coordinatePaint.setColor(getResources().getColor(R.color.sleep_text_color));
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             canvas.drawText(labelText[i], getPaddingLeft(), itemHeight * (1.5f + i) + (textBounds.height() >> 1), textPaint);
             soberPath.reset();
             soberPath.moveTo(getPaddingLeft(), (2 + i) * itemHeight);
@@ -275,13 +286,15 @@ public class DaySleepHistogramView extends View implements Runnable {
     @Override
     public void run() {
 
-        if (mLen == mSleepDataList.size() && mProgress >= 1) {
+        List<SleepData> sleepDataList = this.mSleepDataList;
+
+        if (sleepDataList != null && mLen == sleepDataList.size() && mProgress >= 1) {
             mProgress = 1;
             invalidate();
             return;
         }
 
-        if (mProgress >= 1 && mLen < mSleepDataList.size()) {
+        if (sleepDataList != null && mProgress >= 1 && mLen < sleepDataList.size()) {
             this.mLen += 1;
         }
 
@@ -291,9 +304,7 @@ public class DaySleepHistogramView extends View implements Runnable {
         invalidate();
 
         postDelayed(this, 16);
-
     }
-
 
     /**
      * 刷新 ui
@@ -301,20 +312,19 @@ public class DaySleepHistogramView extends View implements Runnable {
      * @param sleepDataList sleepDataList
      */
     public void setData(List<SleepData> sleepDataList) {
-        if (sleepDataList == null || sleepDataList.isEmpty()) return;
-
         this.mSleepDataList = sleepDataList;
         this.mProgress = 0.0f;
         this.mLen = 0;
 
         int fullTimeQuantum = 0;
-        for (SleepData sleepData : sleepDataList) {
-            fullTimeQuantum += sleepData.getTimeQuantum();
+        if (sleepDataList != null && !sleepDataList.isEmpty()) {
+            for (SleepData sleepData : sleepDataList) {
+                fullTimeQuantum += sleepData.getTimeQuantum();
+            }
+            this.mCellWidth = mFullRectF.width() / fullTimeQuantum;
+            this.mFullTimeQuantum = fullTimeQuantum;
         }
 
-        this.mCellWidth = mFullRectF.width() / fullTimeQuantum;
-        this.mFullTimeQuantum = fullTimeQuantum;
-
-        postInvalidateDelayed(16);
+        postDelayed(this, 16);
     }
 }

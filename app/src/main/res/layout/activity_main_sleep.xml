@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none">
+    android:orientation="vertical">
 
-    <com.szzh.audio.newviewpager.histogram.WeekSleepHistogramView
-        android:id="@+id/sleepy_data_view"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp" />
+    <com.szzh.audio.newviewpager.histogram.DaySleepHistogramView
+        android:id="@+id/day_sleep_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp8" />
 
-</HorizontalScrollView>
+    <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <com.szzh.audio.newviewpager.histogram.WeekSleepHistogramView
+            android:id="@+id/sleepy_data_view"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp" />
+
+    </HorizontalScrollView>
+
+
+</LinearLayout>

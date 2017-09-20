@@ -1,6 +1,9 @@
 # Widget
 自己写的自定义 view
 
+# 自己定义的报表统计控件
+![图表统计控件](https://github.com/wuyalun198612/Widget/blob/master/picture/HistogramView.gif "图表统计控件")
+
 # 自己定义的 loading 控件
 ![loading 控件](https://github.com/wuyalun198612/Widget/blob/master/picture/loading.gif "loading 控件")
 

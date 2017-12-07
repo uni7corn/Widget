@@ -59,4 +59,14 @@
     <color name="eog_color">#FF3fbfff</color>
 
 
+    <!--battery view-->
+    <color name="battery_circle_color">#FF7D8FB3</color>
+
+    <color name="battery_top_full_color">#FF7EA5F4</color>
+    <color name="battery_top_less_color">#FFDB514F</color>
+
+    <color name="battery_bottom_full_color">#FF6293F5</color>
+    <color name="battery_bottom_less_color">#FFCC3835</color>
+
+
 </resources>

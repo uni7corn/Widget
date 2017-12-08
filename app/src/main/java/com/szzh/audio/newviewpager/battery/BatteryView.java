@@ -45,32 +45,34 @@ public class BatteryView extends View {
     private float mTextWidth;
     @ColorInt
     private int mBatteryCircleColor;
-    private float mBatteryCircleWidth;
+    private float mBatteryBorderWidth;
 
     private Paint mBatteryTopAhPaint;//电池上半部分容量画笔
     private Paint mBatteryBottomAhPaint;//电池下半部分容量画笔
 
     private Paint mTextPaint;//电池文字画笔
-    private Paint mBatteryCirclePaint;//电池外圈画笔
+    private Paint mBatteryBorderPaint;//电池外圈画笔
 
-    private float mPower;
+    private int mFullBattery;
+    private int mCurrentBattery;
 
-    private int mCenterX;
     private int mCenterY;
 
-    private RectF mCircleRectF;
+    private RectF mBorderRectF;
     private Rect mTextBounds;
-    private RectF mTopRectF;
-    private RectF mBottomRectF;
+    private RectF mTopAhRectF;
+    private RectF mBottomAhRectF;
     private Path mClipPath;
-    private RectF mRectF;
+    private RectF mAhClipRectF;
 
     private float mBorderRadius;
+    private float mBatteryRadius;
+
     private RectF mCapRectF;
 
-    private static final float mFullPower = 100.0f;
     private float mProgress = 0.0f;
     private int mContentWidth;
+    private float mBatteryAhWidth;
 
 
     public BatteryView(Context context) {
@@ -94,10 +96,13 @@ public class BatteryView extends View {
             // Load attributes
 
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BatteryView);
-            this.mPower = a.getInt(R.styleable.BatteryView_power, 50);
 
-            float tmpProgress = mPower / mFullPower;
-            mProgress = tmpProgress < 0.1f && tmpProgress > 0 ? 0.1f : tmpProgress;
+            this.mCurrentBattery = a.getInt(R.styleable.BatteryView_ah, 0);
+            this.mFullBattery = a.getInt(R.styleable.BatteryView_full_ah, 100);
+
+            mProgress = (float) mCurrentBattery / mFullBattery;
+
+            Log.e(TAG, "init: ------>" + mProgress + "   currentBattery=" + mCurrentBattery + "  fullBattery=" + mFullBattery);
 
             this.mTopFullHalfColor = a.getColor(R.styleable.BatteryView_top_full_half_color, Color.YELLOW);
             this.mTopLessHalfColor = a.getColor(R.styleable.BatteryView_top_less_half_color, Color.YELLOW);
@@ -105,22 +110,27 @@ public class BatteryView extends View {
             this.mBottomFullHalfColor = a.getColor(R.styleable.BatteryView_bottom_full_half_color, Color.BLUE);
             this.mBottomLessHalfColor = a.getColor(R.styleable.BatteryView_bottom_less_half_color, Color.BLUE);
 
-            this.mBatteryCircleColor = a.getColor(R.styleable.BatteryView_battery_circle_color, Color.BLUE);
-            this.mBatteryCircleWidth = a.getDimension(R.styleable.BatteryView_battery_circle_width,
+            this.mBatteryCircleColor = a.getColor(R.styleable.BatteryView_border_color, Color.BLUE);
+            this.mBatteryBorderWidth = a.getDimension(R.styleable.BatteryView_border_width,
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.0f, getResources().getDisplayMetrics()));
 
             this.mTextColor = a.getColor(R.styleable.BatteryView_text_color, Color.WHITE);
-            this.mTextWidth = a.getDimension(R.styleable.BatteryView_battery_text_size,
+            this.mTextWidth = a.getDimension(R.styleable.BatteryView_text_size,
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12.0f, getResources().getDisplayMetrics()));
 
             this.mBorderRadius = a.getDimension(R.styleable.BatteryView_border_radius, TypedValue
                     .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10.0f, getResources().getDisplayMetrics()));
+
+            this.mBatteryRadius = a.getDimension(R.styleable.BatteryView_ah_radius, TypedValue
+                    .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4.0f, getResources()
+                            .getDisplayMetrics()));
 
             a.recycle();
         }
     }
 
     private void initPaint() {
+
         Paint batteryTopAhPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         batteryTopAhPaint.setColor(this.mBatteryCircleColor);
         batteryTopAhPaint.setStyle(Paint.Style.FILL);
@@ -137,11 +147,11 @@ public class BatteryView extends View {
 
         Paint batteryCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         batteryCirclePaint.setColor(this.mBatteryCircleColor);
-        batteryCirclePaint.setStrokeWidth(this.mBatteryCircleWidth);
+        batteryCirclePaint.setStrokeWidth(this.mBatteryBorderWidth);
         batteryCirclePaint.setStyle(Paint.Style.STROKE);
         batteryCirclePaint.setStrokeJoin(Paint.Join.ROUND);
         //batteryAhPaint.setStrokeCap(Paint.Cap.ROUND);
-        this.mBatteryCirclePaint = batteryCirclePaint;
+        this.mBatteryBorderPaint = batteryCirclePaint;
 
         Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.LINEAR_TEXT_FLAG | Paint.SUBPIXEL_TEXT_FLAG);
         textPaint.setColor(this.mTextColor);
@@ -179,65 +189,75 @@ public class BatteryView extends View {
         int centerX = contentWidth >> 1;
         int centerY = contentHeight >> 1;
 
-        this.mCenterX = centerX;
         this.mCenterY = centerY;
 
-        float halfStrokeWidth = (mBatteryCircleWidth / 2);
+        float batteryBorderWidth = this.mBatteryBorderWidth;
+
+        float halfBorderWidth = (batteryBorderWidth / 2);
+
+        float batteryBorderRight = contentWidth - 3 * batteryBorderWidth;
 
         //电池外壳
         RectF circleRectF = new RectF();
-        circleRectF.left = paddingLeft + halfStrokeWidth;
-        circleRectF.right = contentWidth - 3 * mBatteryCircleWidth - halfStrokeWidth;
-        circleRectF.top = paddingTop + halfStrokeWidth;
-        circleRectF.bottom = contentHeight - halfStrokeWidth;
+        circleRectF.left = paddingLeft + halfBorderWidth;
+        circleRectF.right = batteryBorderRight;
+        circleRectF.top = paddingTop + halfBorderWidth;
+        circleRectF.bottom = contentHeight - halfBorderWidth;
 
-        this.mCircleRectF = circleRectF;
+        this.mBorderRectF = circleRectF;
 
         //电池帽
         RectF capRectF = new RectF();
-        capRectF.left = contentWidth - 3 * mBatteryCircleWidth - halfStrokeWidth;
-        capRectF.right = contentWidth - mBatteryCircleWidth;
+        capRectF.left = batteryBorderRight;
+        capRectF.right = contentWidth - batteryBorderWidth;
         capRectF.top = 0.3f * contentHeight;
         capRectF.bottom = 0.7f * contentHeight;
 
         this.mCapRectF = capRectF;
 
+        //电池容量矩形
+        float batteryAhLeft = circleRectF.left + batteryBorderWidth * 1.5f;
+        float batteryAhRight = circleRectF.right - batteryBorderWidth * 1.5f;
+        float batteryAhTop = circleRectF.top + batteryBorderWidth * 1.5f;
+        float batteryAhBottom = circleRectF.bottom - batteryBorderWidth * 1.5f;
+
         //上半部分电量矩形
 
-        RectF topRectF = new RectF();
-        topRectF.left = paddingLeft + mBatteryCircleWidth * 1.5f;
-        topRectF.right = getRight(contentWidth);
-        topRectF.top = paddingTop + mBatteryCircleWidth * 1.5f;
-        topRectF.bottom = centerY;
+        RectF topAhRectF = new RectF();
 
-        this.mTopRectF = topRectF;
+        topAhRectF.left = batteryAhLeft;
+        topAhRectF.top = batteryAhTop;
+        topAhRectF.right = batteryAhRight;
+        topAhRectF.bottom = centerY;
+
+        this.mTopAhRectF = topAhRectF;
 
         //下半部分电量矩形
 
-        RectF bottomRectF = new RectF();
-        bottomRectF.left = paddingLeft + mBatteryCircleWidth * 1.5f;
-        bottomRectF.right = (getRight(contentWidth));
-        bottomRectF.top = centerY;
-        bottomRectF.bottom = contentHeight - mBatteryCircleWidth * 1.5f;
+        RectF bottomAhRectF = new RectF();
 
-        this.mBottomRectF = bottomRectF;
+        bottomAhRectF.left = batteryAhLeft;
+        bottomAhRectF.right = batteryAhRight;
+        bottomAhRectF.top = centerY;
+        bottomAhRectF.bottom = batteryAhBottom;
 
-        Path clipPath = new Path();//裁剪线段
+        this.mBottomAhRectF = bottomAhRectF;
 
-        clipPath.moveTo(paddingLeft + mBatteryCircleWidth * 2.0f, paddingTop + mBatteryCircleWidth * 2.0f);
+        //裁剪电池容量线段
 
-        this.mRectF = new RectF(
-                paddingLeft + mBatteryCircleWidth * 2.0f,
-                paddingTop + mBatteryCircleWidth * 2.0f,
-                (mContentWidth - 4.5f * mBatteryCircleWidth) * mProgress,
-                contentHeight - mBatteryCircleWidth * 2.0f);
+        Path aHClipPath = new Path();
 
-        clipPath.addRoundRect(mRectF, (mBorderRadius - 8) * mProgress, (mBorderRadius - 8) * mProgress,
-                Path.Direction.CCW);
+        aHClipPath.moveTo(batteryAhLeft, batteryAhTop);
+        RectF ahRectF = new RectF(batteryAhLeft, batteryAhTop,
+                batteryAhRight,
+                batteryAhBottom);
+        aHClipPath.addRoundRect(ahRectF, mBatteryRadius, mBatteryRadius, Path.Direction.CCW);
+        aHClipPath.close();
 
-        clipPath.close();
+        this.mBatteryAhWidth = ahRectF.width();
 
-        this.mClipPath = clipPath;
+        this.mAhClipRectF = ahRectF;
+        this.mClipPath = aHClipPath;
     }
 
     @Override
@@ -245,30 +265,36 @@ public class BatteryView extends View {
         super.onDraw(canvas);
         //init1(canvas);
         init2(canvas);
+        clipPath(canvas);
+        drawPercentText(canvas);
+    }
+
+    private void clipPath(Canvas canvas) {
         int save = canvas.save();
+        Log.e(TAG, "clipPath: -------->" + mProgress);
+
         canvas.clipPath(mClipPath);
         drawBatteryTopHalf(canvas);
         drawBatteryBottomHalf(canvas);
         canvas.restoreToCount(save);
-        drawPercentText(canvas);
     }
 
     private void init2(Canvas canvas) {
         int saveLayerAlpha = canvas.saveLayerAlpha(new RectF(0, 0, getWidth(), getHeight()), 255
                 >> 1, Canvas.ALL_SAVE_FLAG);
         drawBatteryCap(canvas);
-        drawBatteryCircle(canvas);
+        drawBatteryBorder(canvas);
         canvas.restoreToCount(saveLayerAlpha);
     }
 
     private void init1(Canvas canvas) {
-        Paint batteryCirclePaint = this.mBatteryCirclePaint;
+        Paint batteryCirclePaint = this.mBatteryBorderPaint;
         int sc = canvas.saveLayer(0, 0, getWidth(), getHeight(), null,
                 Canvas.ALL_SAVE_FLAG);
         batteryCirclePaint.setXfermode(null);
         batteryCirclePaint.setColor(0xFFFFFFFF);
         drawBatteryCap(canvas);
-        drawBatteryCircle(canvas);
+        drawBatteryBorder(canvas);
         batteryCirclePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         batteryCirclePaint.setColor(0x7F7D8FB3);
         batteryCirclePaint.setStyle(Paint.Style.FILL);
@@ -278,42 +304,57 @@ public class BatteryView extends View {
 
     private void drawBatteryBottomHalf(Canvas canvas) {
         Paint batteryBottomAhPaint = this.mBatteryBottomAhPaint;
-        if (mPower > 20) {
+        if (mCurrentBattery > 20) {
             batteryBottomAhPaint.setColor(mBottomFullHalfColor);
         } else {
             batteryBottomAhPaint.setColor(mBottomLessHalfColor);
         }
+
+        if (mCurrentBattery == 0) {
+            batteryBottomAhPaint.setColor(Color.TRANSPARENT);
+        }
+
         batteryBottomAhPaint.setStyle(Paint.Style.FILL);
-        mBottomRectF.right = getRight(mContentWidth) * mProgress;
-        canvas.drawRect(mBottomRectF, batteryBottomAhPaint);
+        mBottomAhRectF.right = mTopAhRectF.left + mBatteryAhWidth * mProgress;
+        canvas.drawRect(mBottomAhRectF, batteryBottomAhPaint);
     }
 
     private void drawBatteryTopHalf(Canvas canvas) {
         Paint batteryTopAhPaint = this.mBatteryTopAhPaint;
-        if (mPower > 20) {
+        if (mCurrentBattery > 20) {
             batteryTopAhPaint.setColor(mTopFullHalfColor);
         } else {
             batteryTopAhPaint.setColor(mTopLessHalfColor);
         }
         batteryTopAhPaint.setStyle(Paint.Style.FILL);
-        mTopRectF.right = getRight(mContentWidth) * mProgress;
-        canvas.drawRect(mTopRectF, batteryTopAhPaint);
-        Log.e(TAG, "drawBatteryTopHalf: ------->" + mTopRectF.toString());
+
+        if (mCurrentBattery == 0) {
+            batteryTopAhPaint.setColor(Color.TRANSPARENT);
+        }
+
+        mTopAhRectF.right = mTopAhRectF.left + mBatteryAhWidth * mProgress;
+        canvas.drawRect(mTopAhRectF, batteryTopAhPaint);
+        Log.e(TAG, "drawBatteryTopHalf: ------->" + mTopAhRectF.toString());
     }
 
     private void drawPercentText(Canvas canvas) {
-        canvas.drawText(FormatTextPower(mPower), getRight(mContentWidth) * 0.5f,
+        if (mCurrentBattery == 0) {
+            mTextPaint.setColor(Color.TRANSPARENT);
+        } else {
+            mTextPaint.setColor(Color.WHITE);
+        }
+        canvas.drawText(FormatTextPower(mCurrentBattery), mBatteryAhWidth * 0.5f,
                 mCenterY + (mTextBounds.height() >> 1), mTextPaint);
     }
 
     private void drawBatteryCap(Canvas canvas) {
-        mBatteryCirclePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        canvas.drawRect(mCapRectF, mBatteryCirclePaint);
+        mBatteryBorderPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        canvas.drawRect(mCapRectF, mBatteryBorderPaint);
     }
 
-    private void drawBatteryCircle(Canvas canvas) {
-        mBatteryCirclePaint.setStyle(Paint.Style.STROKE);
-        canvas.drawRoundRect(mCircleRectF, mBorderRadius, mBorderRadius, mBatteryCirclePaint);
+    private void drawBatteryBorder(Canvas canvas) {
+        mBatteryBorderPaint.setStyle(Paint.Style.STROKE);
+        canvas.drawRoundRect(mBorderRectF, mBorderRadius, mBorderRadius, mBatteryBorderPaint);
     }
 
     private String FormatTextPower(float power) {
@@ -322,21 +363,14 @@ public class BatteryView extends View {
         return formatPower;
     }
 
-    private float getRight(int contentWidth) {
-        return contentWidth - 4.5f * mBatteryCircleWidth;
-    }
 
-    public void setPower(float power) {
-        if (power < 0 || power > 100) return;
-        this.mPower = power;
-        float tmpProgress = power / mFullPower;
-        mProgress = tmpProgress < 0.1f && tmpProgress > 0 ? 0.1f : tmpProgress;
-        mRectF.right = (mContentWidth - 5.0f * mBatteryCircleWidth) * tmpProgress;
+    public void setFullBattery(int battery) {
+        if (battery < 0 || battery > 100) return;
+        this.mCurrentBattery = battery;
+        mProgress = (float) battery / mFullBattery;
         mClipPath.rewind();
-        mClipPath.addRoundRect(mRectF, (mBorderRadius - 8) * tmpProgress, (mBorderRadius - 8) *
-                        tmpProgress,
-                Path.Direction.CCW);
-        mClipPath.close();
+        mAhClipRectF.right = mAhClipRectF.left + (mBatteryAhWidth) * mProgress;
+        mClipPath.addRoundRect(mAhClipRectF, mBatteryRadius, mBatteryRadius, Path.Direction.CCW);
         invalidate();
     }
 }

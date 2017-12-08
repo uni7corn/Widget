@@ -18,22 +18,31 @@ public class TestBatteryActivity extends Activity {
 
     private BatteryView mBatteryView;
 
-    private float power = 10;
+    private int power = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_battery);
 
-        findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
+        this.mBatteryView = (BatteryView) findViewById(R.id.battery);
+
+        findViewById(R.id.bt_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 power++;
-                mBatteryView.setPower(power);
+                mBatteryView.setFullBattery(power);
             }
         });
-        this.mBatteryView = (BatteryView) findViewById(R.id.battery);
 
-        //this.mBatteryView.setPower(power);
+        findViewById(R.id.bt_reduce).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                power--;
+                mBatteryView.setFullBattery(power);
+            }
+        });
+
+        //this.mBatteryView.setFullBattery(power);
     }
 }

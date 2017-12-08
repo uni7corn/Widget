@@ -7,23 +7,34 @@
     android:background="#FF212329">
 
     <Button
-        android:id="@+id/bt"
+        android:id="@+id/bt_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="点击" />
+        android:layout_gravity="left"
+        android:text="增加电量" />
+
+    <Button
+        android:id="@+id/bt_reduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="减少电量" />
 
     <com.szzh.audio.newviewpager.battery.BatteryView
         android:id="@+id/battery"
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
+        android:background="@color/schedule_font_color"
         app:battery_circle_color="@color/battery_circle_color"
         app:battery_circle_width="3dp"
+        app:battery_radius="4dp"
         app:battery_text_size="18sp"
         app:border_radius="8dp"
         app:bottom_full_half_color="@color/battery_bottom_full_color"
         app:bottom_less_half_color="@color/battery_bottom_less_color"
-        app:power="70"
+        app:current_battery="30"
+        app:full_battery="100"
         app:text_color="@color/white"
         app:top_full_half_color="@color/battery_top_full_color"
         app:top_less_half_color="@color/battery_top_less_color" />

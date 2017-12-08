@@ -45,16 +45,18 @@
 
     <declare-styleable name="BatteryView">
 
-        <attr name="power" format="reference|integer" />
-        <attr name="battery_circle_color" format="reference|color" />
-        <attr name="battery_circle_width" format="reference|dimension" />
-        <attr name="battery_text_size" format="reference|dimension" />
+        <attr name="ah" format="reference|integer" />
+        <attr name="full_ah" format="reference|integer" />
+        <attr name="border_color" format="reference|color" />
+        <attr name="border_width" format="reference|dimension" />
+        <attr name="text_size" format="reference|dimension" />
         <attr name="text_color" format="reference|color" />
         <attr name="top_full_half_color" format="reference|color" />
         <attr name="bottom_full_half_color" format="reference|color" />
         <attr name="top_less_half_color" format="reference|color" />
         <attr name="bottom_less_half_color" format="reference|color" />
         <attr name="border_radius" format="reference|dimension" />
+        <attr name="ah_radius" format="reference|dimension" />
 
     </declare-styleable>
 

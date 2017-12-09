@@ -6,14 +6,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -71,7 +68,6 @@ public class BatteryView extends View {
     private RectF mCapRectF;
 
     private float mProgress = 0.0f;
-    private int mContentWidth;
     private float mBatteryAhWidth;
 
 
@@ -102,15 +98,17 @@ public class BatteryView extends View {
 
             mProgress = (float) mCurrentBattery / mFullBattery;
 
-            Log.e(TAG, "init: ------>" + mProgress + "   currentBattery=" + mCurrentBattery + "  fullBattery=" + mFullBattery);
+            this.mTopFullHalfColor = a.getColor(R.styleable.BatteryView_top_full_half_color,
+                    0xFF7EA5F4);
+            this.mTopLessHalfColor = a.getColor(R.styleable.BatteryView_top_less_half_color,
+                    0xFFDB514F);
 
-            this.mTopFullHalfColor = a.getColor(R.styleable.BatteryView_top_full_half_color, Color.YELLOW);
-            this.mTopLessHalfColor = a.getColor(R.styleable.BatteryView_top_less_half_color, Color.YELLOW);
+            this.mBottomFullHalfColor = a.getColor(R.styleable
+                    .BatteryView_bottom_full_half_color, 0xFF6293F5);
+            this.mBottomLessHalfColor = a.getColor(R.styleable
+                    .BatteryView_bottom_less_half_color, 0xFFCC3835);
 
-            this.mBottomFullHalfColor = a.getColor(R.styleable.BatteryView_bottom_full_half_color, Color.BLUE);
-            this.mBottomLessHalfColor = a.getColor(R.styleable.BatteryView_bottom_less_half_color, Color.BLUE);
-
-            this.mBatteryCircleColor = a.getColor(R.styleable.BatteryView_border_color, Color.BLUE);
+            this.mBatteryCircleColor = a.getColor(R.styleable.BatteryView_border_color, 0xFF7D8FB3);
             this.mBatteryBorderWidth = a.getDimension(R.styleable.BatteryView_border_width,
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.0f, getResources().getDisplayMetrics()));
 
@@ -184,9 +182,7 @@ public class BatteryView extends View {
         int contentWidth = w - paddingLeft - paddingRight;
         int contentHeight = h - paddingTop - paddingBottom;
 
-        this.mContentWidth = contentWidth;
-
-        int centerX = contentWidth >> 1;
+        // int centerX = contentWidth >> 1;
         int centerY = contentHeight >> 1;
 
         this.mCenterY = centerY;
@@ -271,7 +267,6 @@ public class BatteryView extends View {
 
     private void clipPath(Canvas canvas) {
         int save = canvas.save();
-        Log.e(TAG, "clipPath: -------->" + mProgress);
 
         canvas.clipPath(mClipPath);
         drawBatteryTopHalf(canvas);
@@ -287,20 +282,20 @@ public class BatteryView extends View {
         canvas.restoreToCount(saveLayerAlpha);
     }
 
-    private void init1(Canvas canvas) {
-        Paint batteryCirclePaint = this.mBatteryBorderPaint;
-        int sc = canvas.saveLayer(0, 0, getWidth(), getHeight(), null,
-                Canvas.ALL_SAVE_FLAG);
-        batteryCirclePaint.setXfermode(null);
-        batteryCirclePaint.setColor(0xFFFFFFFF);
-        drawBatteryCap(canvas);
-        drawBatteryBorder(canvas);
-        batteryCirclePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        batteryCirclePaint.setColor(0x7F7D8FB3);
-        batteryCirclePaint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(new RectF(0, 0, getWidth(), getHeight()), batteryCirclePaint);
-        canvas.restoreToCount(sc);
-    }
+//    private void init1(Canvas canvas) {
+//        Paint batteryCirclePaint = this.mBatteryBorderPaint;
+//        int sc = canvas.saveLayer(0, 0, getWidth(), getHeight(), null,
+//            Canvas.ALL_SAVE_FLAG);
+//        batteryCirclePaint.setXfermode(null);
+//        batteryCirclePaint.setColor(0xFFFFFFFF);
+//        drawBatteryCap(canvas);
+//        drawBatteryBorder(canvas);
+//        batteryCirclePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+//        batteryCirclePaint.setColor(0x7F7D8FB3);
+//        batteryCirclePaint.setStyle(Paint.Style.FILL);
+//        canvas.drawRect(new RectF(0, 0, getWidth(), getHeight()), batteryCirclePaint);
+//        canvas.restoreToCount(sc);
+//    }
 
     private void drawBatteryBottomHalf(Canvas canvas) {
         Paint batteryBottomAhPaint = this.mBatteryBottomAhPaint;
@@ -334,7 +329,6 @@ public class BatteryView extends View {
 
         mTopAhRectF.right = mTopAhRectF.left + mBatteryAhWidth * mProgress;
         canvas.drawRect(mTopAhRectF, batteryTopAhPaint);
-        Log.e(TAG, "drawBatteryTopHalf: ------->" + mTopAhRectF.toString());
     }
 
     private void drawPercentText(Canvas canvas) {
@@ -364,7 +358,7 @@ public class BatteryView extends View {
     }
 
 
-    public void setFullBattery(int battery) {
+    public void setAh(int battery) {
         if (battery < 0 || battery > 100) return;
         this.mCurrentBattery = battery;
         mProgress = (float) battery / mFullBattery;

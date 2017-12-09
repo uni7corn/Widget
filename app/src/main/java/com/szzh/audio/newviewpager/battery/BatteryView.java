@@ -360,9 +360,10 @@ public class BatteryView extends View {
 
 
     public void setAh(int battery) {
-        if (battery < 0 || battery > 100) return;
+        int fullBattery = this.mFullBattery;
+        if (battery < 0 || battery > fullBattery) return;
         this.mCurrentBattery = battery;
-        mProgress = (float) battery / mFullBattery;
+        mProgress = (float) battery / fullBattery;
         mClipPath.rewind();
         mAhClipRectF.right = mAhClipRectF.left + (mBatteryAhWidth) * mProgress;
         mClipPath.addRoundRect(mAhClipRectF, mBatteryRadius, mBatteryRadius, Path.Direction.CCW);

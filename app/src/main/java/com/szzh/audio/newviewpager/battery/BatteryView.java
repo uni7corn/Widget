@@ -337,7 +337,8 @@ public class BatteryView extends View {
         } else {
             mTextPaint.setColor(Color.WHITE);
         }
-        canvas.drawText(FormatTextPower(mCurrentBattery), mBatteryAhWidth * 0.5f,
+        canvas.drawText(FormatTextPower(mCurrentBattery), mBatteryAhWidth * 0.5f + (mTextBounds
+                        .width() >> 2),
                 mCenterY + (mTextBounds.height() >> 1), mTextPaint);
     }
 

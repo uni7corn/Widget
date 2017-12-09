@@ -31,7 +31,7 @@ public class TestBatteryActivity extends Activity {
             @Override
             public void onClick(View v) {
                 power++;
-                mBatteryView.setFullBattery(power);
+                mBatteryView.setAh(power);
             }
         });
 
@@ -39,7 +39,7 @@ public class TestBatteryActivity extends Activity {
             @Override
             public void onClick(View v) {
                 power--;
-                mBatteryView.setFullBattery(power);
+                mBatteryView.setAh(power);
             }
         });
 

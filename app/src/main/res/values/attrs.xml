@@ -60,5 +60,25 @@
 
     </declare-styleable>
 
+    <declare-styleable name="SleepHistogramView">
+        <attr name="label_text_size" format="dimension|reference" />
+        <attr name="label_text_color" format="color|reference" />
+        <attr name="x_max_progress" format="integer|reference" />
+        <attr name="y_max_progress" format="integer|reference" />
+        <attr name="histogram_type" format="enum|reference">
+            <enum name="WEEK" value="0" />
+            <enum name="MONTH" value="1" />
+            <enum name="YEAR" value="2" />
+        </attr>
+        <attr name="empty_text" format="string|reference" />
+        <attr name="empty_text_size" format="dimension|reference" />
+        <attr name="deep_color" format="color|reference" />
+        <attr name="light_color" format="color|reference" />
+        <attr name="eog_color" format="color|reference" />
+        <attr name="sober_color" format="color|reference" />
+        <attr name="coordinate_color" format="color|reference" />
+        <attr name="coordinate_size" format="dimension|reference" />
+    </declare-styleable>
+
 
 </resources>

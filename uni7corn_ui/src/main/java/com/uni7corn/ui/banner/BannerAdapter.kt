@@ -1,9 +1,12 @@
+@file:Suppress("DEPRECATION")
+
 package com.uni7corn.ui.banner
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -23,7 +26,7 @@ import com.uni7corn.ui.R
 class BannerAdapter constructor(context: Context, private val banners: List<Banner>) : PagerAdapter() {
 
     companion object {
-        private const val DEFAULT_TOTAL_COUNT = 88
+        private const val DEFAULT_TOTAL_COUNT = 3
     }
 
     private var onBannerCallback: OnBannerCallback? = null
@@ -34,7 +37,15 @@ class BannerAdapter constructor(context: Context, private val banners: List<Bann
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
+
+        val windowManager = container.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = windowManager.defaultDisplay
+        // val height = display.height
+        val width = display.width
+        val realWidth = width - container.paddingLeft - container.paddingRight
+
         val bannerView = RoundImageView(container.context)
+
         val p = position % banners.size
         if (p >= 0 && p <= banners.size) {
             val banner = banners[p]
@@ -56,9 +67,7 @@ class BannerAdapter constructor(context: Context, private val banners: List<Bann
                     return true
                 }
 
-
-            }).preload(container.resources.getDimensionPixelOffset(R.dimen.space_354), container.resources.getDimensionPixelOffset(R.dimen.space_174))
-
+            }).preload(realWidth, container.resources.getDimensionPixelOffset(R.dimen.space_174))
             container.addView(bannerView)
         }
         return bannerView

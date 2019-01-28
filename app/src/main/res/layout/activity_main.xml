@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
@@ -8,9 +8,16 @@
     android:orientation="vertical"
     tools:context="com.szzh.audio.newviewpager.indicator.MainActivity">
 
-    <com.szzh.audio.newviewpager.sleepy.SleepProgress
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="32dp" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_show_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="banner展示" />
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

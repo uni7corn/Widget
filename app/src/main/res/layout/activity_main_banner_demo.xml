@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.uni7corn.ui.banner.BannerViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/banner_pager"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_174"
+    android:layout_marginTop="@dimen/space_20"
+    android:background="@color/b2_color_day"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingLeft="@dimen/space_10"
+    android:paddingRight="@dimen/space_10" />

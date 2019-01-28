@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--day  theme-->
+
+    <!--bg color-->
+    <color name="b1_color_day">#fff2f3f5</color>
+    <color name="b2_color_day">#ffffffff</color>
+    <color name="b2_alpha_50_color_day">#7fffffff</color>
+    <color name="b3_color_day">#ff6595f4</color>
+    <color name="b4_color_day">#fff1ba5c</color>
+    <color name="b5_color_day">#ff9cbdff</color>
+    <color name="b6_color_day">#ff84c6fa</color>
+    <color name="b7_color_day">#ff5c7de6</color>
+    <color name="b8_color_day">#fff0918e</color>
+
+    <!--font color-->
+    <color name="t1_color_day">#ff475266</color>
+    <color name="t2_color_day">#ff878d99</color>
+    <color name="t2_alpha_color_day">#b2878d99</color>
+    <color name="t2_alpha_40_color_day">#b2878d99</color>
+    <color name="t3_color_day">#ff2c2f37</color>
+    <color name="t4_color_day">#ffe56a67</color>
+    <color name="t5_color_day">#ff475266</color>
+    <color name="t6_color_day">#ffa66f00</color>
+
+    <!--line color-->
+    <color name="l1_color_day">#ffedeff0</color>
+    <color name="l1_alpha_10_color_day">#19edeff0</color>
+    <color name="l2_color_day">#ffcbcbcb</color>
+    <color name="l3_color_day">#ffe3e5e6</color>
+
+    <!--shadow color-->
+    <color name="s1_color_day">#ff779ce6</color>
+    <color name="s2_color_day">#ffadbcd9</color>
+    <color name="s3_color_day">#ff5c6373</color>
+
+    <!--grid color-->
+    <color name="g1_color_day">#ff5779f7</color>
+    <color name="g2_color_day">#ff76a4ff</color>
+    <color name="g3_color_day">#fff5d467</color>
+
+    <!--navigation color-->
+    <color name="n1_color_day">#ff6595f4</color>
+    <color name="n2_color_day">#ffffffff</color>
+    <color name="n2_alpha_40_color_day">#66ffffff</color>
+
+    <!--night  theme-->
+
+    <!--bg color-->
+    <color name="b1_color_night">#ff212329</color>
+    <color name="b2_color_night">#ff2c2f37</color>
+    <color name="b2_alpha_50_color_night">#7f2c2f37</color>
+    <color name="b3_color_night">#ff7ea5f4</color>
+    <color name="b4_color_night">#ffeaa54b</color>
+    <color name="b5_color_night">#ff7ea5f4</color>
+    <color name="b6_color_night">#ff84c6fa</color>
+    <color name="b7_color_night">#ff5c7de6</color>
+    <color name="b8_color_night">#ffbe3030</color>
+
+    <!--font color-->
+    <color name="t1_color_night">#ff98add9</color>
+    <color name="t2_color_night">#ff7a8599</color>
+    <color name="t2_alpha_40_color_night">#b27a8599</color>
+    <color name="t3_color_night">#ffffffff</color>
+    <color name="t4_color_night">#ffdb514f</color>
+    <color name="t5_color_night">#ff7ea5f4</color>
+
+    <!--line color-->
+    <color name="l1_color_night">#ff434b5b</color>
+    <color name="l1_alpha_10_color_night">#19434b5b</color>
+    <color name="l2_color_night">#ff353a47</color>
+    <color name="l3_color_night">#ff434b5b</color>
+
+    <!--shadow color-->
+    <color name="s1_color_night">#00000000</color>
+    <color name="s2_color_night">#00000000</color>
+    <color name="s3_color_night">#00000000</color>
+    <color name="s4_color_night">#00000000</color>
+
+    <!--grid color-->
+    <color name="g1_color_night">#ff3653bf</color>
+    <color name="g2_color_night">#ff5c81cc</color>
+    <color name="g3_color_night">#ffcc9041</color>
+
+    <!--navigation color-->
+    <color name="n1_color_night">#ff363a47</color>
+    <color name="n2_color_night">#ff7ea5f4</color>
+    <color name="n2_alpha_40_color_night">#667ea5f4</color>
+
+</resources>

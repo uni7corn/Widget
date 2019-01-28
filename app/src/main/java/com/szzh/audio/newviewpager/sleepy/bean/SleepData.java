@@ -1,6 +1,6 @@
 package com.szzh.audio.newviewpager.sleepy.bean;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 

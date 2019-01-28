@@ -1,6 +1,6 @@
 package com.szzh.audio.newviewpager.schedule;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Created by jzz
